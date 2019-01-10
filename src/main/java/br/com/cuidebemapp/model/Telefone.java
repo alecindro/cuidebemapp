@@ -6,7 +6,9 @@
 package br.com.cuidebemapp.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -35,7 +38,8 @@ public class Telefone implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "telefone_sequence", sequenceName = "telefone_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "telefone_sequence")
     @Basic(optional = false)
     @Column(name = "idtelefone")
     private Long idtelefone;
@@ -48,11 +52,9 @@ public class Telefone implements Serializable {
     @Column(name = "operadora")
     private String operadora;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "telefone", fetch = FetchType.LAZY)
-    private Set<ResidenciaTelefone> residenciaTelefoneSet;
+    private Set<UsuarioTelefone> usuarioTelefones;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "telefone", fetch = FetchType.LAZY)
-    private Set<UsuarioTelefone> usuarioTelefoneSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "telefone", fetch = FetchType.LAZY)
-    private Set<ResponsavelTelefone> responsavelTelefoneSet;
+    private Set<ResponsavelTelefone> responsavelTelefones;
 
     public Telefone() {
     }
@@ -102,30 +104,30 @@ public class Telefone implements Serializable {
     }
 
     @XmlTransient
-    public Set<ResidenciaTelefone> getResidenciaTelefoneSet() {
-        return residenciaTelefoneSet;
+    public Set<UsuarioTelefone> getUsuarioTelefones() {
+    	if(usuarioTelefones == null) {
+    		usuarioTelefones = new HashSet<>();
+    	}
+        return usuarioTelefones;
     }
 
-    public void setResidenciaTelefoneSet(Set<ResidenciaTelefone> residenciaTelefoneSet) {
-        this.residenciaTelefoneSet = residenciaTelefoneSet;
-    }
-
-    @XmlTransient
-    public Set<UsuarioTelefone> getUsuarioTelefoneSet() {
-        return usuarioTelefoneSet;
-    }
-
-    public void setUsuarioTelefoneSet(Set<UsuarioTelefone> usuarioTelefoneSet) {
-        this.usuarioTelefoneSet = usuarioTelefoneSet;
+    public void setUsuarioTelefones(Set<UsuarioTelefone> usuarioTelefones) {
+    	if(usuarioTelefones == null) {
+    		usuarioTelefones = new HashSet<>();
+    	}
+        this.usuarioTelefones = usuarioTelefones;
     }
 
     @XmlTransient
-    public Set<ResponsavelTelefone> getResponsavelTelefoneSet() {
-        return responsavelTelefoneSet;
+    public Set<ResponsavelTelefone> getResponsavelTelefones() {
+        if(responsavelTelefones == null) {
+        	responsavelTelefones = new HashSet<>();
+        }
+    	return responsavelTelefones;
     }
 
-    public void setResponsavelTelefoneSet(Set<ResponsavelTelefone> responsavelTelefoneSet) {
-        this.responsavelTelefoneSet = responsavelTelefoneSet;
+    public void setResponsavelTelefones(Set<ResponsavelTelefone> responsavelTelefones) {
+        this.responsavelTelefones = responsavelTelefones;
     }
 
     @Override

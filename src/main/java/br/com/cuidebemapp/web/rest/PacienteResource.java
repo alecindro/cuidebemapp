@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import br.com.cuidebemapp.model.Paciente;
+import br.com.cuidebemapp.security.SecurityUtils;
+import br.com.cuidebemapp.service.PacienteDTOService;
 import br.com.cuidebemapp.service.PacienteService;
 import br.com.cuidebemapp.service.dto.PacienteDTO;
 import br.com.cuidebemapp.web.rest.errors.BadRequestAlertException;
@@ -25,68 +27,71 @@ import br.com.cuidebemapp.web.rest.errors.BadRequestAlertException;
 public class PacienteResource {
 
 	private final Logger log = LoggerFactory.getLogger(PacienteResource.class);
-	private PacienteService pacienteService;
+	private final PacienteDTOService pacienteDTOService;
+	private final PacienteService pacienteService;
 	
-	public PacienteResource(PacienteService pacienteService) {
+	public PacienteResource(PacienteService pacienteService, PacienteDTOService pacienteDTOService) {
+		this.pacienteDTOService = pacienteDTOService;
 		this.pacienteService = pacienteService;
 	}
-	
+
 	@GetMapping("/pacientes")
-    @Timed
-    public List<PacienteDTO> getAllPacientesEnabled(){
+	@Timed
+	public List<PacienteDTO> getAllPacientesEnabled() {
 		log.info("get all pacientes enabled");
-		return pacienteService.getPacienteEnabled();
+		return pacienteDTOService.getPacienteEnabled();
 	}
-	
-	/*@GetMapping("/pacientes")
-    @Timed
-    public List<PacienteDTO> getAllPacientes(@RequestParam("enabled") boolean enabled){
-		log.info("get all pacientes enabled: "+enabled);
-		if(enabled) {
-		return getAllPacientesEnabled();
-		}
-		return pacienteService.getPacienteDisabled();
-	}*/
-	
+
+	@GetMapping("/pacientedtos")
+	@Timed
+	public List<PacienteDTO> getPacientes() {
+		log.info("get all pacientes with patoogias enabled");
+		return pacienteDTOService.getPacientePatologiaEnabled();
+	}
+
 	@GetMapping("/pacientes/{id}")
 	@Timed
 	public Paciente getPaciente(@PathVariable("id") Long idpaciente) {
 		return pacienteService.getPaciente(idpaciente);
 	}
-	
+
 	@PostMapping("/pacientes/checkin")
 	@Timed
 	public PacienteDTO checkin(@RequestBody PacienteDTO pacienteDTO) {
-		return pacienteService.check(pacienteDTO, true);
+		return pacienteDTOService.check(pacienteDTO, true);
 	}
-	
+
 	@PostMapping("/pacientes/checkout")
 	@Timed
 	public PacienteDTO checkout(@RequestBody PacienteDTO pacienteDTO) {
-		return pacienteService.check(pacienteDTO, false);
+		return pacienteDTOService.check(pacienteDTO, false);
 	}
-	
+
 	@DeleteMapping("/pacientes/{id}")
 	@Timed
 	public Paciente delete(@PathVariable("id") Long idpaciente) {
 		return pacienteService.delete(idpaciente);
 	}
-	
+
 	@PostMapping("/pacientes")
 	@Timed
-	public Paciente save(@RequestBody Paciente paciente) {
-		if(paciente.getIdpaciente() != null) {
-			throw new BadRequestAlertException("A new paciente cannot already have an ID", Paciente.class.getName(), "idexists");
+	public PacienteDTO save(@RequestBody PacienteDTO pacienteDTO) {
+		if (pacienteDTO.getPaciente().getIdpaciente() != null) {
+			throw new BadRequestAlertException("A new paciente cannot already have an ID", Paciente.class.getName(),
+					"idexists");
 		}
-		return pacienteService.save(paciente);
+		String login = SecurityUtils.getCurrentUserLogin().get();
+		return pacienteDTOService.save(pacienteDTO,login);
 	}
-	
+
 	@PutMapping("/pacientes")
 	@Timed
-	public Paciente update(@RequestBody Paciente paciente) {
-		if(paciente.getIdpaciente() == null) {
-			throw new BadRequestAlertException("A update paciente cannot already not have an ID", Paciente.class.getName(), "idnotexists");
+	public PacienteDTO update(@RequestBody PacienteDTO pacientedto) {
+		if (pacientedto.getPaciente().getIdpaciente() == null) {
+			throw new BadRequestAlertException("A update paciente cannot already not have an ID",
+					Paciente.class.getName(), "idnotexists");
 		}
-		return pacienteService.update(paciente);
+		String login = SecurityUtils.getCurrentUserLogin().get();
+		return pacienteDTOService.update(pacientedto,login);
 	}
 }

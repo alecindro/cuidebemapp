@@ -11,10 +11,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,6 +32,8 @@ public class Emailcontent implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+	@SequenceGenerator(name = "emailcontent_sequence", sequenceName = "emailcontent_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "emailcontent_sequence")
     @Basic(optional = false)
     @Column(name = "idemailenviado")
     private Long idemailenviado;

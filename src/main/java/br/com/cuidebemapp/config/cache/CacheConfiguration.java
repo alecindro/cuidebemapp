@@ -57,7 +57,7 @@ public class CacheConfiguration extends CachingConfigurerSupport{
     public JCacheManagerCustomizer cacheManagerCustomizer(DataSource dataSource) {
     	 
         return cm -> {
-        	List<String> tenants = SecurityUtils.getTenants(dataSource, appProperties.getTenantPrefix()).collect(Collectors.toList());
+        /*	List<String> tenants = SecurityUtils.getTenants(dataSource, appProperties.getTenantPrefix()).collect(Collectors.toList());
         	for (String tenant : tenants ) {
             createCache(cm,br.com.cuidebemapp.repository.AgendaRepository.NEXT_AGENDA_CACHE, tenant);
             createCache(cm,br.com.cuidebemapp.repository.EventoRepository.MAX_EVENTO, tenant);
@@ -69,14 +69,14 @@ public class CacheConfiguration extends CachingConfigurerSupport{
             createCache(cm,br.com.cuidebemapp.repository.PacientePhotoRepository.PACIENTE_PHOTO_BY_PACIENTE, tenant);
             createCache(cm,br.com.cuidebemapp.repository.PacientePhotoRepository.PACIENTE_PHOTO_BY_USER, tenant);
             createCache(cm,br.com.cuidebemapp.repository.PacienteRepository.PACIENTES_ENABLED_CACHE, tenant);
-        	} 
+        	} */
         	//UAA caches
-        	cm.createCache(br.com.cuidebemapp.repository.UserRepository.USERS_BY_LOGIN_CACHE,jcacheConfiguration);
-        	cm.createCache(br.com.cuidebemapp.repository.UserRepository.USERS_BY_EMAIL_CACHE,jcacheConfiguration);
+        	//cm.createCache(br.com.cuidebemapp.repository.UserRepository.USERS_BY_LOGIN_CACHE,jcacheConfiguration);
+        //	cm.createCache(br.com.cuidebemapp.repository.UserRepository.USERS_BY_EMAIL_CACHE,jcacheConfiguration);
         	
-        	cm.createCache(br.com.cuidebemapp.domain.User.class.getName(), jcacheConfiguration);
-            cm.createCache(br.com.cuidebemapp.domain.Authority.class.getName(), jcacheConfiguration);
-            cm.createCache(br.com.cuidebemapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+        //	cm.createCache(br.com.cuidebemapp.domain.User.class.getName(), jcacheConfiguration);
+         //   cm.createCache(br.com.cuidebemapp.domain.Authority.class.getName(), jcacheConfiguration);
+         //   cm.createCache(br.com.cuidebemapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
                         
             // jhipster-needle-ehcache-add-entry
         };
@@ -90,7 +90,7 @@ public class CacheConfiguration extends CachingConfigurerSupport{
     private String tenantToSchemaName(String schema) {
 		return CurrentTenantIdentifierResolverImpl.getSchemaName(schema);
 	}
-    
+    	
     private void createCache(javax.cache.CacheManager cm,String cacheName, String tenantID) {
     	 String tenant = tenantToSchemaName(tenantID);
     	cm.createCache(cacheName+tenant, jcacheConfiguration);

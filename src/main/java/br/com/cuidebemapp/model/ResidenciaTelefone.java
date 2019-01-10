@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,18 +31,24 @@ public class ResidenciaTelefone implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @SequenceGenerator(name = "residencia_telefone_sequence", sequenceName = "residencia_telefone_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "residencia_telefone_sequence")
+  @Basic(optional = false)
     @Column(name = "idresidencia_telefone")
     private Long idresidenciaTelefone;
     @JoinColumn(name = "idresidencia", referencedColumnName = "idresidencia")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Residencia residencia;
-    @JoinColumn(name = "idtelefone", referencedColumnName = "idtelefone")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Telefone telefone;
+    @Column(name = "telefone")
+    private String telefone;
+    @Column(name = "ddd")
+    private String ddd;
+    @Column(name = "tipo")
+    private String tipo;
+    @Column(name = "operadora")
+    private String operadora;
 
-    public ResidenciaTelefone() {
+	public ResidenciaTelefone() {
     }
 
     public ResidenciaTelefone(Long idresidenciaTelefone) {
@@ -64,15 +71,39 @@ public class ResidenciaTelefone implements Serializable {
         this.residencia = residencia;
     }
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
+    public String getTelefone() {
+		return telefone;
+	}
 
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    @Override
+	public String getDdd() {
+		return ddd;
+	}
+
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getOperadora() {
+		return operadora;
+	}
+
+	public void setOperadora(String operadora) {
+		this.operadora = operadora;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idresidenciaTelefone != null ? idresidenciaTelefone.hashCode() : 0);

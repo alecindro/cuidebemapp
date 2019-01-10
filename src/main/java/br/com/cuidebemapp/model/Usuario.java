@@ -7,6 +7,7 @@ package br.com.cuidebemapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -61,10 +62,10 @@ public class Usuario implements Serializable {
 	private UsuarioPhoto usuarioPhoto;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY,orphanRemoval = true)
     @JsonIgnoreProperties(value = "usuario", allowSetters = true)
-	private Set<Evento> eventoSet;
+	private Set<Evento> eventos;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY,orphanRemoval = true)
     @JsonIgnoreProperties(value = "usuario", allowSetters = true)
-	private Set<UsuarioTelefone> usuarioTelefoneSet;
+	private Set<UsuarioTelefone> usuarioTelefones;
 
 	public Usuario() {
 	}
@@ -153,21 +154,27 @@ public class Usuario implements Serializable {
 	}
 
 	@XmlTransient
-	public Set<Evento> getEventoSet() {
-		return eventoSet;
+	public Set<Evento> getEventos() {
+		if(eventos.isEmpty()) {
+			eventos = new HashSet<>();
+		}
+		return eventos;
 	}
 
-	public void setEventoSet(Set<Evento> eventoSet) {
-		this.eventoSet = eventoSet;
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	@XmlTransient
-	public Set<UsuarioTelefone> getUsuarioTelefoneSet() {
-		return usuarioTelefoneSet;
+	public Set<UsuarioTelefone> getUsuarioTelefones() {
+		if(usuarioTelefones.isEmpty()) {
+			usuarioTelefones = new HashSet<>();
+		}
+		return usuarioTelefones;
 	}
 
-	public void setUsuarioTelefoneSet(Set<UsuarioTelefone> usuarioTelefoneSet) {
-		this.usuarioTelefoneSet = usuarioTelefoneSet;
+	public void setUsuarioTelefones(Set<UsuarioTelefone> usuarioTelefones) {
+		this.usuarioTelefones = usuarioTelefones;
 	}
 
 	@Override

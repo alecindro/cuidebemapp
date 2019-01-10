@@ -1,7 +1,11 @@
 package br.com.cuidebemapp.service.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.cuidebemapp.model.Agenda;
 import br.com.cuidebemapp.model.Paciente;
+import br.com.cuidebemapp.model.PatologiaPaciente;
 
 public class PacienteDTO {
 
@@ -9,49 +13,75 @@ public class PacienteDTO {
 	private String photo;
 	private boolean checkin;
 	private Agenda nextAgenda;
-	
-	
+	private List<PatologiaPacienteDTO> patologiasDTO;
+
 	public PacienteDTO() {
 		super();
 	}
-	
+
 	public PacienteDTO(Paciente paciente, String photo, boolean checkin, Agenda nextAgenda) {
 		super();
 		this.paciente = paciente;
 		this.photo = photo;
 		this.checkin = checkin;
 		this.nextAgenda = nextAgenda;
+		this.patologiasDTO = new ArrayList<>();
+		for (PatologiaPaciente pp : paciente.getPatologiaPacienteSet()) {
+			PatologiaPacienteDTO dto = new PatologiaPacienteDTO(pp);
+			this.patologiasDTO.add(dto);
+		}
 	}
-	
+
 	public Paciente getPaciente() {
 		return paciente;
 	}
+
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
+
 	public String getPhoto() {
 		return photo;
 	}
+
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+
 	public boolean isCheckin() {
 		return checkin;
 	}
+
 	public void setCheckin(boolean checkin) {
 		this.checkin = checkin;
 	}
+
 	public Agenda getNextAgenda() {
 		return nextAgenda;
 	}
+
 	public void setNextAgenda(Agenda nextAgenda) {
 		this.nextAgenda = nextAgenda;
 	}
 
+
+	public List<PatologiaPacienteDTO> getPatologiasDTO() {
+		if (patologiasDTO == null) {
+			patologiasDTO = new ArrayList<>();
+		}
+		return patologiasDTO;
+	}
+
+	public void setPatologiasDTO(List<PatologiaPacienteDTO> patologiasDTO) {
+		this.patologiasDTO = patologiasDTO;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "PacienteDTO [paciente=" + paciente.toString() + ", photo=" + photo + ", checkin=" + checkin + ", nextAgenda="
-				+ nextAgenda + "]";
+		return "PacienteDTO [paciente=" + paciente.toString() + ", photo=" + photo + ", checkin=" + checkin
+				+ ", nextAgenda=" + nextAgenda + "]";
 	}
 
 	@Override
@@ -93,6 +123,5 @@ public class PacienteDTO {
 			return false;
 		return true;
 	}
-	
-	
+
 }

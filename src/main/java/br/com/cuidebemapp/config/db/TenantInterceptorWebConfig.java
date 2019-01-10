@@ -1,5 +1,6 @@
 package br.com.cuidebemapp.config.db;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,7 +10,12 @@ public class TenantInterceptorWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-    	registry.addInterceptor(new TenantInterceptor());
+    	registry.addInterceptor(tenantInterceptor());
    }
+    
+    @Bean
+    public TenantInterceptor tenantInterceptor() {
+    	return new TenantInterceptor();
+    }
 
 }

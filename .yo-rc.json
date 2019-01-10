@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "br.com.cuidebemapp"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "monolith",
+    "baseName": "cuidebemapp",
+    "packageName": "br.com.cuidebemapp",
+    "packageFolder": "br/com/cuidebemapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MTljNmVhNDdkNjAzMzA0MTA2OTM3MDk1MWFhMjg5YmQxN2Q2Y2Y3YmIwODg5MTZkZWZlYjAzN2U2YzM0Mjk2ZTYyYTQwY2IxZTRhMjkxMjU2ZGZiZTkzNGQ1ZGQzZWQ4YjI0ZGYzYWE0MTg5OTg0ZDk5YzZmMTYyYjJkYjdkMTQ=",
+    "clientFramework": "angularX",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": false
+  }
+}

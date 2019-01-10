@@ -17,7 +17,6 @@ public class TenantInterceptor extends HandlerInterceptorAdapter {
 	private ApplicationProperties appProperties;
 	
 	public TenantInterceptor() {
-		
 	}
 
 	@Override

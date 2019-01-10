@@ -19,9 +19,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,8 +40,9 @@ public class Paciente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @SequenceGenerator(name = "paciente_sequence", sequenceName = "paciente_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paciente_sequence")
+	@Basic(optional = false)
     @Column(name = "idpaciente")
     private Long idpaciente;
     @Basic(optional = false)
@@ -72,7 +75,7 @@ public class Paciente implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = "paciente", allowSetters = true)
     private Set<Evento> eventoSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private Set<PatologiaPaciente> patologiaPacienteSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente", fetch = FetchType.LAZY)
     private Set<Agendadef> agendadefSet;
@@ -158,7 +161,7 @@ public class Paciente implements Serializable {
         this.tpestadia = tpestadia;
     }
 
-    @XmlTransient
+    @Transient
     public Set<PacientePhoto> getPacientePhotoSet() {
     	if(pacientePhotoSet == null) {
     		pacientePhotoSet = new HashSet<>();
@@ -218,7 +221,7 @@ public class Paciente implements Serializable {
         this.eventoSet = eventoSet;
     }
 
-    @XmlTransient
+    @Transient
     public Set<PatologiaPaciente> getPatologiaPacienteSet() {
     	if(patologiaPacienteSet == null) {
     		patologiaPacienteSet = new HashSet<PatologiaPaciente>();

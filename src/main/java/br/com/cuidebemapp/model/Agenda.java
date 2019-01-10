@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,8 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Agenda implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@SequenceGenerator(name = "agenda_sequence", sequenceName = "agenda_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_sequence")
     @Basic(optional = false)
     @Column(name = "idagenda")
     private Long idagenda;

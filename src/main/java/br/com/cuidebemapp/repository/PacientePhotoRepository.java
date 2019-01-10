@@ -2,7 +2,6 @@ package br.com.cuidebemapp.repository;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,17 +18,17 @@ public interface PacientePhotoRepository extends JpaRepository<PacientePhoto, Lo
 	String PACIENTE_PHOTO_BY_USER = "pacientePhotoByUser";
 	String PACIENTE_PHOTO_BY_PACIENTE = "pacientePhotoByPaciente";
 	
-	@Cacheable(cacheNames = {PACIENTE_PHOTO_ALL}, cacheResolver="dynCacheResolver")
+//	@Cacheable(cacheNames = {PACIENTE_PHOTO_ALL}, cacheResolver="dynCacheResolver")
 	public List<PacientePhoto> findAll();
 	
-	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_USER}, cacheResolver="dynCacheResolver")
+//	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_USER}, cacheResolver="dynCacheResolver")
 	public PacientePhoto findByLogin(String login);
 	
-	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_PACIENTE}, cacheResolver="dynCacheResolver")
+//	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_PACIENTE}, cacheResolver="dynCacheResolver")
 	public List<PacientePhoto> findByPacienteAndPrincipal(Paciente paciente, boolean principal);
 	
 	@Query(value="select pp from PacientePhoto pp where pp.paciente.idpaciente = ?1 and pp.principal = true")
-	@Cacheable(cacheNames = {PACIENTE_PHOTO}, cacheResolver="dynCacheResolver")
+//	@Cacheable(cacheNames = {PACIENTE_PHOTO}, cacheResolver="dynCacheResolver")
 	public PacientePhoto findPhotoPrincipal(Long idpaciente);
 	
 	@EntityGraph(attributePaths = { "paciente" })

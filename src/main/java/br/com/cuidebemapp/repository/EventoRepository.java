@@ -2,7 +2,6 @@ package br.com.cuidebemapp.repository;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +19,7 @@ public interface EventoRepository extends JpaRepository<Evento,Long> {
 	String EVENTO_PACIENTE_TOP30 = "eventoPacienteTop30";
 	
 	@Query(value = "select grupoEvento from evento where idevento = (select max(idevento) from evento where idpaciente = ?1)", nativeQuery = true)
-    @Cacheable(cacheNames = {MAX_EVENTO} , cacheResolver="dynCacheResolver")
+   // @Cacheable(cacheNames = {MAX_EVENTO} , cacheResolver="dynCacheResolver")
 	String getMaxEventoByIdPaciente(Long idpaciente);
 
 	
@@ -29,7 +28,7 @@ public interface EventoRepository extends JpaRepository<Evento,Long> {
 	List<Evento> getEventoTodayByIdPaciente(Long idpaciente, Date data);
 	*/
 	
-	@Cacheable(cacheNames = {EVENTO_PACIENTE_TOP30} , cacheResolver="dynCacheResolver")
+	//@Cacheable(cacheNames = {EVENTO_PACIENTE_TOP30} , cacheResolver="dynCacheResolver")
 	@EntityGraph(attributePaths = {"usuario"})
 	List<Evento> findTop30ByPacienteOrderByDataregistroDesc(Paciente paciente);
 	

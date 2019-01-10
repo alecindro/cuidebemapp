@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,86 +31,88 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @XmlRootElement
 public class Memorando implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idmemorando")
-    private Long idmemorando;
-    @Basic(optional = false)
-    @Column(name = "dataregistro")
-    
-    private java.time.OffsetDateTime dataregistro;
-    @Column(name = "dataalteracao")
-    
-    private java.time.OffsetDateTime dataalteracao;
-    @Basic(optional = false)
-    
-    @Column(name = "descricao")
-    private String descricao;
-    @JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"pacientePhotoSet","responsavelPacienteSet","agendaSet","memorandoSet","eventoSet","patologiaPacienteSet","agendadefSet","schedulemailSet"}, allowSetters = true)
-    private Paciente paciente;
-    @JoinColumn(name = "login", referencedColumnName = "login")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"eventoSet","usuarioTelefoneSet","usuarioPhoto"}, allowSetters = true)
-    private Usuario usuario;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@SequenceGenerator(name = "memorando_sequence", sequenceName = "memorando_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memorando_sequence")
+	@Basic(optional = false)
+	@Column(name = "idmemorando")
+	private Long idmemorando;
+	@Basic(optional = false)
+	@Column(name = "dataregistro")
 
-    public Memorando() {
-    }
+	private java.time.OffsetDateTime dataregistro;
+	@Column(name = "dataalteracao")
 
-    public Memorando(Long idmemorando) {
-        this.idmemorando = idmemorando;
-    }
+	private java.time.OffsetDateTime dataalteracao;
+	@Basic(optional = false)
 
-    public Memorando(Long idmemorando, java.time.OffsetDateTime dataregistro, String descricao) {
-        this.idmemorando = idmemorando;
-        this.dataregistro = dataregistro;
-        this.descricao = descricao;
-    }
+	@Column(name = "descricao")
+	private String descricao;
+	@JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties(value = { "pacientePhotoSet", "responsavelPacienteSet", "agendaSet", "memorandoSet",
+			"eventoSet", "patologiaPacienteSet", "agendadefSet", "schedulemailSet" }, allowSetters = true)
+	private Paciente paciente;
+	@JoinColumn(name = "login", referencedColumnName = "login")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties(value = { "eventoSet", "usuarioTelefoneSet", "usuarioPhoto" }, allowSetters = true)
+	private Usuario usuario;
 
-    public Long getIdmemorando() {
-        return idmemorando;
-    }
+	public Memorando() {
+	}
 
-    public void setIdmemorando(Long idmemorando) {
-        this.idmemorando = idmemorando;
-    }
+	public Memorando(Long idmemorando) {
+		this.idmemorando = idmemorando;
+	}
 
-    public java.time.OffsetDateTime getDataregistro() {
-        return dataregistro;
-    }
+	public Memorando(Long idmemorando, java.time.OffsetDateTime dataregistro, String descricao) {
+		this.idmemorando = idmemorando;
+		this.dataregistro = dataregistro;
+		this.descricao = descricao;
+	}
 
-    public void setDataregistro(java.time.OffsetDateTime dataregistro) {
-        this.dataregistro = dataregistro;
-    }
+	public Long getIdmemorando() {
+		return idmemorando;
+	}
 
-    public java.time.OffsetDateTime getDataalteracao() {
-        return dataalteracao;
-    }
+	public void setIdmemorando(Long idmemorando) {
+		this.idmemorando = idmemorando;
+	}
 
-    public void setDataalteracao(java.time.OffsetDateTime dataalteracao) {
-        this.dataalteracao = dataalteracao;
-    }
+	public java.time.OffsetDateTime getDataregistro() {
+		return dataregistro;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public void setDataregistro(java.time.OffsetDateTime dataregistro) {
+		this.dataregistro = dataregistro;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public java.time.OffsetDateTime getDataalteracao() {
+		return dataalteracao;
+	}
 
-    public Paciente getPaciente() {
-        return paciente;
-    }
+	public void setDataalteracao(java.time.OffsetDateTime dataalteracao) {
+		this.dataalteracao = dataalteracao;
+	}
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-    
-    public Usuario getUsuario() {
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
@@ -118,28 +121,29 @@ public class Memorando implements Serializable {
 	}
 
 	@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idmemorando != null ? idmemorando.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (idmemorando != null ? idmemorando.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Memorando)) {
-            return false;
-        }
-        Memorando other = (Memorando) object;
-        if ((this.idmemorando == null && other.idmemorando != null) || (this.idmemorando != null && !this.idmemorando.equals(other.idmemorando))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Memorando)) {
+			return false;
+		}
+		Memorando other = (Memorando) object;
+		if ((this.idmemorando == null && other.idmemorando != null)
+				|| (this.idmemorando != null && !this.idmemorando.equals(other.idmemorando))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "br.com.cuidebemapp.model.Memorando[ idmemorando=" + idmemorando + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "br.com.cuidebemapp.model.Memorando[ idmemorando=" + idmemorando + " ]";
+	}
+
 }

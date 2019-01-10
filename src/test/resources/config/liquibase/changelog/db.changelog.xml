@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-1">
+		<createSequence sequenceName="agenda_sequence" startValue="1" incrementBy="1"/>
+		
+		<createTable tableName="agenda">
+			<column defaultValueSequenceNext="agenda_sequence" name="idagenda" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idagendadef" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="dataregistro" type="TIMESTAMP WITH TIME ZONE" />
+			<column name="grupoevento" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subgrupoevento" type="VARCHAR(255)" />
+			<column name="observacao" type="VARCHAR(255)" />
+			<column name="idevento" type="BIGINT" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-2">
+		<createSequence sequenceName="agendadef_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="agendadef">
+			<column  name="idagendadef" type="BIGINT" defaultValueSequenceNext="agendadef_sequence">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="datainicio" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="datafim" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValueComputed="CURRENT_TIMESTAMP"
+				name="dataRegistro" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario" type="VARCHAR(45)">
+				<constraints nullable="false" />
+			</column>
+			<column name="repetirHoras" type="INT" />
+			<column name="diasemana" type="VARCHAR(255)" />
+			<column name="grupoevento" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subgrupoevento" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="observacao" type="VARCHAR(255)" />
+			<column defaultValue="0" name="diaspersonalizado"
+				type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-3">
+				<createSequence sequenceName="emailcontent_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="emailcontent">
+			<column name="idemailenviado" type="BIGINT" defaultValueSequenceNext="emailcontent_sequence">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="content" type="LONGBLOB">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-4">
+		<createSequence sequenceName="emailenviado_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="emailenviado">
+			<column defaultValueSequenceNext="emailenviado_sequence" name="idemailenviado" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="to_email" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subject" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="content_type" type="VARCHAR(45)" />
+			<column name="message" type="VARCHAR(255)" />
+			<column name="dataenvio" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="datarelatorio" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="0" name="error" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="0" name="automatic" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-5">
+		<createSequence sequenceName="evento_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="evento">
+			<column defaultValueSequenceNext="evento_sequence" name="idevento" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="login" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="descevento" type="VARCHAR(255)" />
+			<column name="dataevento" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="dataregistro" type="TIMESTAMP WITH TIME ZONE" />
+			<column defaultValue="0" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column name="obsevento" type="VARCHAR(255)" />
+			<column name="grupoevento" type="VARCHAR(45)" />
+			<column name="subgrupoevento" type="VARCHAR(45)" />
+			<column name="respeventos" type="VARCHAR(255)" />
+			<column defaultValueNumeric="0" name="peso" type="INT" />
+			<column name="pressaoinicial" type="INT" />
+			<column name="pressaofinal" type="INT" />
+			<column name="value" type="INT" />
+			<column name="descricao" type="VARCHAR(255)" />
+			<column name="aspecto" type="VARCHAR(255)" />
+			<column name="quantidade" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-7">
+				<createSequence sequenceName="jhi_persistent_audit_event_evento_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="jhi_persistent_audit_event">
+			<column defaultValueSequenceNext="jhi_persistent_audit_event_evento_sequence" name="event_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="principal" type="VARCHAR(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="event_date" type="timestamp" />
+			<column name="event_type" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-8">
+		<createTable tableName="jhi_persistent_audit_evt_data">
+			<column name="event_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR(150)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="value" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-11">
+				<createSequence sequenceName="logauth_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="logauth">
+			<column defaultValueSequenceNext="logauth_sequence" name="idlogauth" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="login" type="VARCHAR(40)">
+				<constraints nullable="false" />
+			</column>
+			<column name="datalog" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="timezone" type="VARCHAR(30)" />
+			<column defaultValue="0" name="sucess" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-12">
+				<createSequence sequenceName="memorando_sequence" startValue="1" incrementBy="1"/>
+						<createTable tableName="memorando">
+			<column defaultValueSequenceNext="memorando_sequence" name="idmemorando" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="dataregistro" type="TIMESTAMP WITH TIME ZONE">
+				<constraints nullable="false" />
+			</column>
+			<column name="dataalteracao" type="TIMESTAMP WITH TIME ZONE" />
+			<column name="descricao" type="VARCHAR(5000)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-13">
+<createSequence sequenceName="paciente_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="paciente">
+			<column defaultValueSequenceNext="paciente_sequence" name="idpaciente" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="nome" type="VARCHAR(254)">
+				<constraints nullable="false" />
+			</column>
+			<column name="apelido" type="VARCHAR(45)" />
+			<column defaultValue="0" name="genero" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column name="datanascimento" type="date" />
+			<column name="status" type="BOOLEAN" />
+			<column defaultValue="1" name="tpestadia" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-14">
+<createSequence sequenceName="paciente_photo_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="paciente_photo">
+			<column defaultValueSequenceNext="paciente_photo_sequence" name="idpacientephoto" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="photo" type="VARCHAR(50000)" />
+			<column name="descricao" type="VARCHAR(255)" />
+			<column defaultValue="0" name="principal" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column name="type" type="VARCHAR(45)" />
+			<column defaultValueComputed="CURRENT_TIMESTAMP"
+				name="dataregistro" type="TIMESTAMP WITH TIME ZONE" />
+			<column name="login" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-15">
+<createSequence sequenceName="patologia_paciente_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="patologia_paciente">
+			<column defaultValueSequenceNext="patologia_paciente_sequence" name="idpatologiapaciente"
+				type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="patologia" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-18">
+<createSequence sequenceName="responsavel_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="responsavel">
+			<column defaultValueSequenceNext="responsavel_sequence" name="idresponsavel" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="nome" type="VARCHAR(254)" />
+			<column name="apelido" type="VARCHAR(254)" />
+			<column name="email" type="VARCHAR(254)" />
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column name="datanascimento" type="date" />
+			<column name="vinculo" type="VARCHAR(45)" />
+			<column defaultValue="1" name="tpresponsavel" type="BOOLEAN" />
+			<column name="cpf" type="VARCHAR(45)" />
+			<column name="rg" type="VARCHAR(45)" />
+			<column name="endereco" type="VARCHAR(255)" />
+			<column name="cidade" type="VARCHAR(255)" />
+			<column name="estado" type="VARCHAR(30)" />
+			<column defaultValue="1" name="genero" type="BOOLEAN" />
+			<column name="cep" type="VARCHAR(8)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-19">
+<createSequence sequenceName="responsavel_paciente_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="responsavel_paciente">
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="idresponsavel" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValueSequenceNext="responsavel_paciente_sequence" name="idresponsavel_paciente"
+				type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-20">
+		<createTable tableName="responsavel_photo">
+			<column name="idresponsavel" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="photo" type="VARCHAR(50000)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-21">
+<createSequence sequenceName="responsavel_telefone_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="responsavel_telefone">
+			<column defaultValueSequenceNext="responsavel_telefone_sequence" name="idresponsavel_telefone"
+				type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idresponsavel" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="idtelefone" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-24">
+		<createSequence sequenceName="schedulemail_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="schedulemail">
+			<column defaultValueSequenceNext="schedulemail_sequence" name="idschedulemail" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="idresponsavel" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="idpaciente" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="diasemana" type="VARCHAR(45)">
+				<constraints nullable="false" />
+			</column>
+			<column name="hora" type="VARCHAR(5)">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-25">
+				<createSequence sequenceName="telefone_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="telefone">
+			<column defaultValueSequenceNext="telefone_sequence" name="idtelefone" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="telefone" type="VARCHAR(45)" />
+			<column name="ddd" type="VARCHAR(4)" />
+			<column name="tipo" type="VARCHAR(45)" />
+			<column name="operadora" type="VARCHAR(45)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-28">
+		<createTable tableName="usuario">
+			<column name="login" type="VARCHAR(255)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="email" type="VARCHAR(254)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="nome" type="VARCHAR(254)" />
+			<column name="apelido" type="VARCHAR(100)" />
+			<column defaultValue="1" name="enabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValue="0" name="genero" type="BOOLEAN" />
+			<column name="datanascimento" type="date" />
+			<column name="tipousuario" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-29">
+		<createTable tableName="usuario_photo">
+			<column name="login" type="VARCHAR(255)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="photo" type="VARCHAR(50000)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-31">
+		<createSequence sequenceName="usuario_telefone_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="usuario_telefone">
+			<column defaultValueSequenceNext="usuario_telefone_sequence" name="idusuario_telefone"
+				type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="login" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="idtelefone" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-32">
+		<addUniqueConstraint
+			columnNames="idresponsavel, idpaciente"
+			constraintName="UNIQUE_SCHEMAIL" tableName="schedulemail" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-33">
+		<addUniqueConstraint
+			columnNames="idresponsavel, idtelefone"
+			constraintName="resp_tel_unique" tableName="responsavel_telefone" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-34">
+		<addUniqueConstraint
+			columnNames="idpaciente, patologia" constraintName="unique_patologia"
+			tableName="patologia_paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-35">
+		<addUniqueConstraint
+			columnNames="idresponsavel, idpaciente"
+			constraintName="unique_resp_paciente"
+			tableName="responsavel_paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-37">
+		<addUniqueConstraint
+			columnNames="login, idtelefone" constraintName="unique_usuario_tel"
+			tableName="usuario_telefone" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-40">
+		<createIndex indexName="fk_agenda_agendadef_idx"
+			tableName="agenda">
+			<column name="idagendadef" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-41">
+		<createIndex indexName="fk_agenda_paciente_idx"
+			tableName="agenda">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-42">
+		<createIndex indexName="fk_agendadef_paciente_idx"
+			tableName="agendadef">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-45">
+		<createIndex indexName="fk_evento_cuidador_idx"
+			tableName="evento">
+			<column name="login" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-46">
+		<createIndex indexName="fk_evento_paciente_idx"
+			tableName="evento">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-47">
+		<createIndex indexName="fk_memo_paciente_idx"
+			tableName="memorando">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-51">
+		<createIndex indexName="idx_persistent_audit_event"
+			tableName="jhi_persistent_audit_event">
+			<column name="principal" />
+			<column name="event_date" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-52">
+		<createIndex indexName="idx_persistent_audit_evt_data"
+			tableName="jhi_persistent_audit_evt_data">
+			<column name="event_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-53">
+		<createIndex indexName="pacientePhotoUsuarioFK_idx"
+			tableName="paciente_photo">
+			<column name="login" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-55">
+		<createIndex indexName="paciente_resp_idx"
+			tableName="responsavel_paciente">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-56">
+		<createIndex indexName="pacientephotoFK_idx"
+			tableName="paciente_photo">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-58">
+		<createIndex indexName="resp_paciente_idx"
+			tableName="responsavel_paciente">
+			<column name="idresponsavel" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-59">
+		<createIndex indexName="resp_tel_idx"
+			tableName="responsavel_telefone">
+			<column name="idresponsavel" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-60">
+		<createIndex indexName="tel_resp_fk_idx"
+			tableName="responsavel_telefone">
+			<column name="idtelefone" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-61">
+		<createIndex indexName="tel_usuario_fk_idx"
+			tableName="usuario_telefone">
+			<column name="idtelefone" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-62">
+		<createIndex indexName="unique_schemail_pac_idx"
+			tableName="schedulemail">
+			<column name="idpaciente" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-64">
+		<createIndex indexName="usuario_tel_idx"
+			tableName="usuario_telefone">
+			<column name="login" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-66">
+		<addForeignKeyConstraint
+			baseColumnNames="idagendadef" baseTableName="agenda"
+			constraintName="fk_agenda_agendadef" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idagendadef" referencedTableName="agendadef" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-67">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="agenda"
+			constraintName="fk_agenda_paciente" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-68">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="agendadef"
+			constraintName="fk_agendadef_paciente" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-70">
+		<addForeignKeyConstraint
+			baseColumnNames="idemailenviado" baseTableName="emailcontent"
+			constraintName="fk_email_content" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idemailenviado"
+			referencedTableName="emailenviado" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-72">
+		<addForeignKeyConstraint
+			baseColumnNames="login" baseTableName="evento"
+			constraintName="fk_evento_cuidador" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="login" referencedTableName="usuario" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-73">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="evento"
+			constraintName="fk_evento_paciente" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-74">
+		<addForeignKeyConstraint
+			baseColumnNames="event_id"
+			baseTableName="jhi_persistent_audit_evt_data"
+			constraintName="fk_evt_pers_audit_evt_data" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="event_id"
+			referencedTableName="jhi_persistent_audit_event" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-75">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="memorando"
+			constraintName="fk_memo_paciente" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-76">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="patologia_paciente"
+			constraintName="fk_patologia_paciente" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-77">
+		<addForeignKeyConstraint
+			baseColumnNames="idresponsavel" baseTableName="responsavel_photo"
+			constraintName="fk_responsavel_photo" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idresponsavel"
+			referencedTableName="responsavel" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-80">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="schedulemail"
+			constraintName="fk_schemail_pac" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-82">
+		<addForeignKeyConstraint
+			baseColumnNames="idresponsavel" baseTableName="schedulemail"
+			constraintName="fk_schemail_resp" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idresponsavel"
+			referencedTableName="responsavel" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-84">
+		<addForeignKeyConstraint
+			baseColumnNames="login" baseTableName="usuario_photo"
+			constraintName="fk_usuario_photo" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="login" referencedTableName="usuario" />
+	</changeSet>
+
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-86">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="responsavel_paciente"
+			constraintName="paciente_resp_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-87">
+		<addForeignKeyConstraint
+			baseColumnNames="idpaciente" baseTableName="paciente_photo"
+			constraintName="pacientephotoFK" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idpaciente" referencedTableName="paciente" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-90">
+		<addForeignKeyConstraint
+			baseColumnNames="idresponsavel" baseTableName="responsavel_paciente"
+			constraintName="resp_paciente_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idresponsavel"
+			referencedTableName="responsavel" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-91">
+		<addForeignKeyConstraint
+			baseColumnNames="idresponsavel" baseTableName="responsavel_telefone"
+			constraintName="resp_tel_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idresponsavel"
+			referencedTableName="responsavel" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-92">
+		<addForeignKeyConstraint
+			baseColumnNames="idtelefone" baseTableName="responsavel_telefone"
+			constraintName="tel_resp_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idtelefone" referencedTableName="telefone" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-93">
+		<addForeignKeyConstraint
+			baseColumnNames="idtelefone" baseTableName="usuario_telefone"
+			constraintName="tel_usuario_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="idtelefone" referencedTableName="telefone" />
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-96">
+		<addForeignKeyConstraint
+			baseColumnNames="login" baseTableName="usuario_telefone"
+			constraintName="usuario_tel_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="login" referencedTableName="usuario" />
+	</changeSet>
+</databaseChangeLog>
