@@ -17,7 +17,11 @@ public class ResponsavelPhotoService {
 	private ResponsavelPhotoRepository responsavelPhotoRepository;
 	
 	public ResponsavelPhoto save(ResponsavelPhoto responsavelPhoto) {
-		return responsavelPhotoRepository.save(responsavelPhoto);
+		if(responsavelPhoto.getIdresponsavel() == null) {
+			responsavelPhoto.setIdresponsavel(responsavelPhoto.getResponsavel().getIdresponsavel());
+		}
+		ResponsavelPhoto rp =  responsavelPhotoRepository.save(responsavelPhoto);
+		return rp;
 	}
 	
 	public void delete(ResponsavelPhoto responsavelPhoto) {

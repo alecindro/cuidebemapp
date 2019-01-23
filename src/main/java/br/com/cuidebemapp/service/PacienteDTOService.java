@@ -104,7 +104,7 @@ public class PacienteDTOService {
 		pacienteDTO.setPaciente(paciente);
 		savePhoto(pacienteDTO, login);
 		savePatologia(pacienteDTO);
-		return null;
+		return pacienteDTO;
 	}
 
 	private void savePhoto(PacienteDTO pacienteDTO, String login) {

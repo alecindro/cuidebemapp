@@ -55,7 +55,7 @@ import java.util.*;
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/sec")
 public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
@@ -106,6 +106,17 @@ public class UserResource {
                 .body(newUser);
         }
     }
+    
+    @PostMapping("/users/desactive")
+    @Timed
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public User disableUser(@RequestBody String login) throws URISyntaxException {
+    	User user = this.userRepository.findOneByLogin(login).get();
+    	user.setActivated(false);
+    	return this.userRepository.save(user);
+    }
+    
+    
 
     /**
      * PUT /users : Updates an existing User.

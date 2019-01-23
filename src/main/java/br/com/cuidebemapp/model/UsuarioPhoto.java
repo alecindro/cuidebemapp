@@ -17,6 +17,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.cuidebemapp.service.util.Base64Deserializer;
+
 /**
  *
  * @author alecindro

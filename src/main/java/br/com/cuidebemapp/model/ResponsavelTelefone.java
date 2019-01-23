@@ -20,6 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author alecindro
@@ -36,6 +38,7 @@ public class ResponsavelTelefone implements Serializable {
     @Basic(optional = false)
     @Column(name = "idresponsavel_telefone")
     private Long idresponsavelTelefone;
+    @JsonIgnore
     @JoinColumn(name = "idresponsavel", referencedColumnName = "idresponsavel")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Responsavel responsavel;

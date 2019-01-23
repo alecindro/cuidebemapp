@@ -22,7 +22,7 @@ import javax.validation.Valid;
  * Controller to authenticate users.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/sec")
 public class UserJWTController {
 
     private final TokenProvider tokenProvider;

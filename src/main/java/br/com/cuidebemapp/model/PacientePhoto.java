@@ -20,6 +20,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.cuidebemapp.service.util.Base64Deserializer;
+
 /**
  *
  * @author alecindro
@@ -39,6 +43,7 @@ public class PacientePhoto implements Serializable {
     @Column(name = "idpacientephoto")
     private Long idpacientephoto;
     @Column(name = "photo")
+    @JsonDeserialize(using = Base64Deserializer.class)
     private String photo;
     @Column(name = "descricao")
     private String descricao;

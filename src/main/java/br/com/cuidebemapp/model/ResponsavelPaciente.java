@@ -8,6 +8,7 @@ package br.com.cuidebemapp.model;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class ResponsavelPaciente implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Paciente paciente;
     @JoinColumn(name = "idresponsavel", referencedColumnName = "idresponsavel")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade= CascadeType.REMOVE)
     private Responsavel responsavel;
 
     public ResponsavelPaciente() {

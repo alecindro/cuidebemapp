@@ -19,11 +19,11 @@ import br.com.cuidebemapp.web.rest.RestBase;
 @SpringBootTest(classes = CuidebemappApp.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ResponsavelPacienteTest  extends RestBase {
+public class ResponsavelPacienteTest extends RestBase {
 
 	private String baseURL = "/api/responsavelpacientes/";
-	
-	@Test
+
+	// @Test
 	public void teste() throws Exception {
 		ResponsavelPaciente rp = new ResponsavelPaciente();
 		Paciente paciente = new Paciente(1L);
@@ -31,20 +31,26 @@ public class ResponsavelPacienteTest  extends RestBase {
 		Responsavel responsavel = new Responsavel();
 		responsavel.setNome("testeBack");
 		rp.setResponsavel(responsavel);
-		ResponsavelPaciente result = post(baseURL,rp);
-		System.out.println("ID rp " +result.getIdresponsavelPaciente());
+		ResponsavelPaciente result = post(baseURL, rp);
+		System.out.println("ID rp " + result.getIdresponsavelPaciente());
+
 	}
-	
+
 	@Test
 	public void teste2() throws Exception {
 		Long idpaciente = 1L;
-		baseURL = baseURL+idpaciente;
+		baseURL = baseURL + idpaciente;
 		List<ResponsavelPaciente> rps = get(baseURL, "idpaciente", idpaciente, ResponsavelPaciente.class);
-		System.out.println("Size "+rps.size());
-		for(ResponsavelPaciente rp : rps) {
+		System.out.println("Size " + rps.size());
+		for (ResponsavelPaciente rp : rps) {
 			System.out.println(rp.getResponsavel().getNome());
+			if (rp.getResponsavel() != null) {
+				if (rp.getResponsavel().getResponsavelPhoto() != null) {
+					System.out.println("Photo " + rp.getResponsavel().getResponsavelPhoto().getPhoto());
+
+				}
+			}
 		}
 	}
-
 
 }

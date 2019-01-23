@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.cuidebemapp.CuidebemappApp;
 import br.com.cuidebemapp.model.Responsavel;
 import br.com.cuidebemapp.web.rest.RestBase;
+import br.com.foureffect.testrest2.model.RequestParam;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CuidebemappApp.class)
@@ -19,12 +20,13 @@ import br.com.cuidebemapp.web.rest.RestBase;
 @ActiveProfiles("test")
 public class ResponsavelTest  extends RestBase {
 
-	private String baseURL = "/api/responsavel/paciente/";
+	private String baseURL = "/api/responsaveis";
 	
 	@Test
 	public void teste() throws Exception {
 		Long idpaciente = 1L;
-		baseURL = baseURL+idpaciente;
+		RequestParam rp = new RequestParam();
+		rp.addParams("idpaciente", 1);
 		List<Responsavel> responsaveis = get(baseURL, "idpaciente", idpaciente, Responsavel.class);
 		System.out.println("Size "+responsaveis.size());
 		for(Responsavel responsavel : responsaveis) {

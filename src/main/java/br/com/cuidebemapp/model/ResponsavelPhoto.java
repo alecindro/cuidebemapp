@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author alecindro
@@ -35,6 +37,7 @@ public class ResponsavelPhoto implements Serializable {
     private String photo;
     @JoinColumn(name = "idresponsavel", referencedColumnName = "idresponsavel", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Responsavel responsavel;
 
     public ResponsavelPhoto() {

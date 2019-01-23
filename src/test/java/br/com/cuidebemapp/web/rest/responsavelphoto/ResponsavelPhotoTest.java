@@ -1,5 +1,11 @@
 package br.com.cuidebemapp.web.rest.responsavelphoto;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Base64;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,13 +31,30 @@ public class ResponsavelPhotoTest  extends RestBase {
 		ResponsavelPhoto rp = new ResponsavelPhoto();
 		Responsavel responsavel = new Responsavel(1L);
 		rp.setResponsavel(responsavel);
-		String photo = "data:image/jpeg;base64,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";
+		
+		String photo = encoder("/home/alecindro/Pictures/dogok.jpeg");
+		Base64.getDecoder().decode(photo);
+		System.out.println("Photo Upload: "+ photo);
 		rp.setPhoto(photo);
 		ResponsavelPhoto result = post(baseURL,rp);
 		System.out.println("ID rp " +result.getIdresponsavel());
 	}
 	
 
-
+	public static String encoder(String imagePath) {
+		String base64Image = "";
+		File file = new File(imagePath);
+		try (FileInputStream imageInFile = new FileInputStream(file)) {
+			// Reading a Image file from file system
+			byte imageData[] = new byte[(int) file.length()];
+			imageInFile.read(imageData);
+			base64Image = new String(Base64.getEncoder().encode(imageData),"UTF-8");
+		} catch (FileNotFoundException e) {
+			System.out.println("Image not found" + e);
+		} catch (IOException ioe) {
+			System.out.println("Exception while reading the Image " + ioe);
+		}
+		return base64Image;
+	}
 
 }

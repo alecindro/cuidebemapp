@@ -10,8 +10,14 @@ public class TenantInterceptorWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-    	registry.addInterceptor(tenantInterceptor());
+    	registry.addInterceptor(tenantInterceptor()).addPathPatterns("/api/**");
+    	registry.addInterceptor(secTenantInterceptor()).addPathPatterns("/sec/**");
    }
+    
+    @Bean
+    public SecurityTenantInterceptor secTenantInterceptor() {
+    	return new SecurityTenantInterceptor();
+    }
     
     @Bean
     public TenantInterceptor tenantInterceptor() {

@@ -73,13 +73,13 @@ public class Responsavel implements Serializable {
 	private Boolean genero;
 	@Column(name = "cep")
 	private String cep;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "responsavel", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "responsavel", fetch = FetchType.LAZY)
 	private Set<ResponsavelPaciente> responsavelPacientes;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "responsavel", fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REMOVE,mappedBy = "responsavel", fetch = FetchType.LAZY)
 	private ResponsavelPhoto responsavelPhoto;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "responsavel", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "responsavel", fetch = FetchType.LAZY)
 	private Set<ResponsavelTelefone> responsavelTelefones;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "responsavel", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "responsavel", fetch = FetchType.LAZY)
 	private Set<Schedulemail> schedulemails;
 
 	public Responsavel() {

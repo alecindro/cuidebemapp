@@ -39,6 +39,8 @@ public class TenantInterceptor extends HandlerInterceptorAdapter {
 		}
 		return tenantSet;
 	}
+	
+
 /*
 	private void handleNotAuthorized(HttpServletResponse res, String responseBody) throws IOException {
 		res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
