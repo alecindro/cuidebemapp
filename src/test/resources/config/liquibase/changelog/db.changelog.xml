@@ -46,13 +46,13 @@
 				<constraints nullable="false" />
 			</column>
 			<column defaultValueComputed="CURRENT_TIMESTAMP"
-				name="dataRegistro" type="TIMESTAMP WITH TIME ZONE">
+				name="dataregistro" type="TIMESTAMP WITH TIME ZONE">
 				<constraints nullable="false" />
 			</column>
 			<column name="horario" type="VARCHAR(45)">
 				<constraints nullable="false" />
 			</column>
-			<column name="repetirHoras" type="INT" />
+			<column name="repetirhoras" type="INT" />
 			<column name="diasemana" type="VARCHAR(255)" />
 			<column name="grupoevento" type="VARCHAR(255)">
 				<constraints nullable="false" />
@@ -741,4 +741,26 @@
 			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
 			referencedColumnNames="login" referencedTableName="usuario" />
 	</changeSet>
+	<changeSet author="alecindro" id="1540827102718-97">
+    <addColumn 
+            tableName="memorando">
+        <column name="login" type="varchar(255)"/>
+    </addColumn>
+</changeSet>
+<changeSet author="alecindro"
+		id="1540827102718-98">
+		<createIndex indexName="memo_usuario_idx"
+			tableName="memorando">
+			<column name="login" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro"
+		id="1540827102718-99">
+		<addForeignKeyConstraint
+			baseColumnNames="login" baseTableName="memorando"
+			constraintName="memo_usuario_fk" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="login" referencedTableName="usuario" />
+	</changeSet>
+	
 </databaseChangeLog>

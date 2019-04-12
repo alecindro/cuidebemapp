@@ -36,7 +36,7 @@ public class MemorandoResource {
     @Timed
     public List<Memorando> getMemorandos(@RequestParam("idpaciente") long idpaciente){
 		Paciente paciente = new Paciente(idpaciente);
-		List<Memorando> memorandos = memorandoService.getMemorandosToday(paciente);
+		List<Memorando> memorandos = memorandoService.getMemorandosTop30(paciente);
 		return memorandos;
 	}
 	

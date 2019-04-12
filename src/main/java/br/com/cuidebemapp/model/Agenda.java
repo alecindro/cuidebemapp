@@ -29,144 +29,154 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Agenda implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	@Id
 	@SequenceGenerator(name = "agenda_sequence", sequenceName = "agenda_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_sequence")
-    @Basic(optional = false)
-    @Column(name = "idagenda")
-    private Long idagenda;
-    @Basic(optional = false)
-    @Column(name = "data")
-  
-    private java.time.OffsetDateTime data;
-    @Column(name = "dataregistro")
-    
-    private java.time.OffsetDateTime dataregistro;
-    @Basic(optional = false)
-    @Column(name = "grupoevento")
-    private String grupoEvento;
-    @Column(name = "subgrupoevento")
-    private String subGrupoEvento;
-    @Column(name = "observacao")
-    private String observacao;
-    @Column(name = "idevento")
-    private Long idevento;
-    @JoinColumn(name = "idagendadef", referencedColumnName = "idagendadef")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Agendadef agendadef;
-    @JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Paciente paciente;
+	@Basic(optional = false)
+	@Column(name = "idagenda")
+	private Long idagenda;
+	@Basic(optional = false)
+	@Column(name = "data")
 
-    public Agenda() {
-    }
+	private java.time.OffsetDateTime data;
+	@Column(name = "dataregistro")
 
-    public Agenda(Long idagenda) {
-        this.idagenda = idagenda;
-    }
+	private java.time.OffsetDateTime dataregistro;
+	@Basic(optional = false)
+	@Column(name = "grupoevento")
+	private String grupoEvento;
+	@Column(name = "subgrupoevento")
+	private String subGrupoEvento;
+	@Column(name = "observacao")
+	private String observacao;
+	@Column(name = "idevento")
+	private Long idevento;
+	@JoinColumn(name = "idagendadef", referencedColumnName = "idagendadef")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Agendadef agendadef;
+	@JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Paciente paciente;
 
-    public Agenda(Long idagenda, java.time.OffsetDateTime data, String grupoEvento) {
-        this.idagenda = idagenda;
-        this.data = data;
-        this.grupoEvento = grupoEvento;
-    }
+	public Agenda() {
 
-    public Long getIdagenda() {
-        return idagenda;
-    }
+	}
 
-    public void setIdagenda(Long idagenda) {
-        this.idagenda = idagenda;
-    }
+	public Agenda(Agendadef agendadef) {
+		this.agendadef = agendadef;
+		this.paciente = agendadef.getPaciente();
+		this.grupoEvento = agendadef.getGrupoevento();
+		this.subGrupoEvento = agendadef.getSubgrupoevento();
+		this.observacao = agendadef.getObservacao();
+	}
 
-    public java.time.OffsetDateTime getData() {
-        return data;
-    }
+	public Agenda(Long idagenda) {
+		this.idagenda = idagenda;
+	}
 
-    public void setData(java.time.OffsetDateTime data) {
-        this.data = data;
-    }
+	public Agenda(Long idagenda, java.time.OffsetDateTime data, String grupoEvento) {
+		this.idagenda = idagenda;
+		this.data = data;
+		this.grupoEvento = grupoEvento;
+	}
 
-    public java.time.OffsetDateTime getDataregistro() {
-        return dataregistro;
-    }
+	public Long getIdagenda() {
+		return idagenda;
+	}
 
-    public void setDataregistro(java.time.OffsetDateTime dataregistro) {
-        this.dataregistro = dataregistro;
-    }
+	public void setIdagenda(Long idagenda) {
+		this.idagenda = idagenda;
+	}
 
-    public String getGrupoEvento() {
-        return grupoEvento;
-    }
+	public java.time.OffsetDateTime getData() {
+		return data;
+	}
 
-    public void setGrupoEvento(String grupoEvento) {
-        this.grupoEvento = grupoEvento;
-    }
+	public void setData(java.time.OffsetDateTime data) {
+		this.data = data;
+	}
 
-    public String getSubGrupoEvento() {
-        return subGrupoEvento;
-    }
+	public java.time.OffsetDateTime getDataregistro() {
+		return dataregistro;
+	}
 
-    public void setSubGrupoEvento(String subGrupoEvento) {
-        this.subGrupoEvento = subGrupoEvento;
-    }
+	public void setDataregistro(java.time.OffsetDateTime dataregistro) {
+		this.dataregistro = dataregistro;
+	}
 
-    public String getObservacao() {
-        return observacao;
-    }
+	public String getGrupoEvento() {
+		return grupoEvento;
+	}
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
+	public void setGrupoEvento(String grupoEvento) {
+		this.grupoEvento = grupoEvento;
+	}
 
-    public Long getIdevento() {
-        return idevento;
-    }
+	public String getSubGrupoEvento() {
+		return subGrupoEvento;
+	}
 
-    public void setIdevento(Long idevento) {
-        this.idevento = idevento;
-    }
+	public void setSubGrupoEvento(String subGrupoEvento) {
+		this.subGrupoEvento = subGrupoEvento;
+	}
 
-    public Agendadef getAgendadef() {
-        return agendadef;
-    }
+	public String getObservacao() {
+		return observacao;
+	}
 
-    public void setAgendadef(Agendadef agendadef) {
-        this.agendadef = agendadef;
-    }
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
-    public Paciente getPaciente() {
-        return paciente;
-    }
+	public Long getIdevento() {
+		return idevento;
+	}
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
+	public void setIdevento(Long idevento) {
+		this.idevento = idevento;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idagenda != null ? idagenda.hashCode() : 0);
-        return hash;
-    }
+	public Agendadef getAgendadef() {
+		return agendadef;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Agenda)) {
-            return false;
-        }
-        Agenda other = (Agenda) object;
-        if ((this.idagenda == null && other.idagenda != null) || (this.idagenda != null && !this.idagenda.equals(other.idagenda))) {
-            return false;
-        }
-        return true;
-    }
+	public void setAgendadef(Agendadef agendadef) {
+		this.agendadef = agendadef;
+	}
 
-    @Override
-    public String toString() {
-        return "br.com.cuidebemapp.model.Agenda[ idagenda=" + idagenda + " ]";
-    }
-    
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (idagenda != null ? idagenda.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Agenda)) {
+			return false;
+		}
+		Agenda other = (Agenda) object;
+		if ((this.idagenda == null && other.idagenda != null)
+				|| (this.idagenda != null && !this.idagenda.equals(other.idagenda))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "br.com.cuidebemapp.model.Agenda[ idagenda=" + idagenda + " ]";
+	}
+
 }

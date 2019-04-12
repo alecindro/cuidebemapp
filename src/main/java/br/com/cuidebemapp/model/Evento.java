@@ -8,7 +8,6 @@ package br.com.cuidebemapp.model;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -81,6 +81,8 @@ public class Evento implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties(value = {"eventoSet","pacientePhotoSet","responsavelPacienteSet","agendaSet","memorandoSet","eventoSet","patologiaPacienteSet","agendadefSet","usuarioTelefoneSet"}, allowSetters = true)
     private Paciente paciente;
+	@Transient
+	private Agenda agenda;
 
     public Evento() {
     }
@@ -238,8 +240,16 @@ public class Evento implements Serializable {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+    
+    public Agenda getAgenda() {
+		return agenda;
+	}
 
-    @Override
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idevento != null ? idevento.hashCode() : 0);
@@ -266,7 +276,7 @@ public class Evento implements Serializable {
 				+ ", grupoevento=" + grupoevento + ", subgrupoevento=" + subgrupoevento + ", respeventos=" + respeventos
 				+ ", peso=" + peso + ", pressaoinicial=" + pressaoinicial + ", pressaofinal=" + pressaofinal
 				+ ", value=" + value + ", descricao=" + descricao + ", aspecto=" + aspecto + ", quantidade="
-				+ quantidade + ", usuario=" + usuario.toString() + ", paciente=" + paciente.toString() + "]";
+				+ quantidade + "]";
 	}
 
     

@@ -35,27 +35,24 @@ public class Agendadef implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@SequenceGenerator(name = "agenda_def_sequence", sequenceName = "agenda_def_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_def_sequence")
+	@SequenceGenerator(name = "agendadef_sequence", sequenceName = "agendadef_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agendadef_sequence")
 	@Basic(optional = false)
 	@Column(name = "idagendadef")
 	private Long idagendadef;
 	@Basic(optional = false)
 	@Column(name = "datainicio")
-
 	private java.time.OffsetDateTime datainicio;
 	@Basic(optional = false)
 	@Column(name = "datafim")
-
 	private java.time.OffsetDateTime datafim;
 	@Basic(optional = false)
-	@Column(name = "dataRegistro")
-
+	@Column(name = "dataregistro")
 	private java.time.OffsetDateTime dataRegistro;
 	@Basic(optional = false)
 	@Column(name = "horario")
 	private String horario;
-	@Column(name = "repetirHoras")
+	@Column(name = "repetirhoras")
 	private Integer repetirHoras;
 	@Column(name = "diasemana")
 	private String diasemana;
@@ -73,11 +70,13 @@ public class Agendadef implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "enabled")
 	private boolean enabled;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "agendadef", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "agendadef", fetch = FetchType.LAZY)
 	private Set<Agenda> agendaSet;
 	@JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Paciente paciente;
+	  @javax.persistence.Transient
+	    private Integer[] dias;
 
 	public Agendadef() {
 	}
@@ -211,6 +210,34 @@ public class Agendadef implements Serializable {
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+	
+	public Integer[] getDias() {
+		if (diasemana != null && !diasemana.isEmpty()) {
+			String[] _dias = diasemana.split(",");
+			int _diaslenght = _dias.length;
+			dias = new Integer[_diaslenght];
+			for(int i = 0 ;i<_diaslenght;i++){
+				dias[i] = Integer.valueOf(_dias[i]);
+			}
+		}
+		return dias;
+	}
+
+	public void setDias(Integer[] dias) {
+		this.dias = dias;
+		if (dias != null && dias.length > 0) {
+			diasemana = "";
+			boolean first = true;
+			for(Integer _dia : dias){
+				if(first){
+					diasemana = String.valueOf(_dia);
+				}else{
+				diasemana = diasemana.concat(",").concat(String.valueOf(_dia));
+				}
+				first = false;
+			}
+		}
 	}
 
 	@Override

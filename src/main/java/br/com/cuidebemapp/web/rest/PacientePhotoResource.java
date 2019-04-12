@@ -67,15 +67,15 @@ public class PacientePhotoResource {
 	
 	@PutMapping("/pacientephotos")
     @Timed
-    public PacientePhoto updatePaciente(@RequestBody PacientePhoto pacientePhoto){
+    public PacientePhoto updatePacientePhoto(@RequestBody PacientePhoto pacientePhoto){
 		log.info("update photo principal");
 		return pacientePhotoService.update(pacientePhoto);
 	}
 	
 	@DeleteMapping("/pacientephotos/{idpacientephoto}")
     @Timed
-    public void deletePaciente(@PathVariable("idPaciente")  Long idPaciente){
-		log.info("update photo principal");
-		pacientePhotoService.delete(idPaciente);
+    public void deletePacientePhoto(@PathVariable("idpacientephoto")  Long idpacientephoto){
+		log.info("delete photo");
+		pacientePhotoService.delete(idpacientephoto);
 	}
 }

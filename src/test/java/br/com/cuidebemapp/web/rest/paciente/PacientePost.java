@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.cuidebemapp.CuidebemappApp;
 import br.com.cuidebemapp.model.Paciente;
+import br.com.cuidebemapp.service.dto.PacienteDTO;
 import br.com.cuidebemapp.web.rest.RestBase;
 
 @RunWith(SpringRunner.class)
@@ -47,8 +48,9 @@ public class PacientePost extends RestBase {
 	}
 	
 	public void create(Paciente paciente) throws Exception {
-		Paciente result = post(baseURL,paciente);
-		assertThat(result.getNome()).isEqualTo(paciente.getNome());
+		PacienteDTO pacienteDTO = new PacienteDTO(paciente,null,false,null);
+		PacienteDTO result = post(baseURL,pacienteDTO);
+		assertThat(result.getPaciente().getNome()).isEqualTo(paciente.getNome());
 	}
 
 

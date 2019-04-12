@@ -3,9 +3,12 @@ package br.com.cuidebemapp.service;
 import java.util.List;
 
 import org.springframework.cache.CacheManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.cuidebemapp.enums.Check;
+import br.com.cuidebemapp.model.Agenda;
 import br.com.cuidebemapp.model.Evento;
 import br.com.cuidebemapp.model.Paciente;
 import br.com.cuidebemapp.repository.EventoRepository;
@@ -17,20 +20,26 @@ public class EventoService {
 	
 	private final CacheManager cacheManager;
 	private final EventoRepository eventoRepository;
+	private final AgendaService agendaService;
 	
 	
-	public EventoService(CacheManager cacheManager, EventoRepository eventoRepository) {
+	public EventoService(CacheManager cacheManager, EventoRepository eventoRepository,AgendaService agendaService) {
 		super();
 		this.cacheManager = cacheManager;
 		this.eventoRepository = eventoRepository;
+		this.agendaService = agendaService;
 	}
 	
 	public Evento save(Evento evento) {
+		Agenda agenda = evento.getAgenda();
 		evento.setUsuario(SecurityUtils.getCurrentUsuario());
 		Paciente paciente = evento.getPaciente();
 		evento =  eventoRepository.save(evento);
-		cacheManager.getCache(EventoRepository.EVENTO_PACIENTE_TOP30).evict(paciente);
-		cacheManager.getCache(EventoRepository.MAX_EVENTO).evict(paciente.getIdpaciente());
+		if(agenda != null) {
+			agendaService.setEvento(agenda, evento.getIdevento());
+		}
+	//	cacheManager.getCache(EventoRepository.EVENTO_PACIENTE_TOP30).evict(paciente);
+	//	cacheManager.getCache(EventoRepository.MAX_EVENTO).evict(paciente.getIdpaciente());
         return evento;
 	}
 	
@@ -41,6 +50,10 @@ public class EventoService {
 	public Evento delete(Evento evento) {
 		evento.setEnabled(false);
 		return eventoRepository.save(evento);
+	}
+	
+	public Page<Evento> findEventoByPacientePageabe(Paciente paciente, Pageable pageable, boolean enabled){
+		return eventoRepository.findEventoByPacienteAndEnabled(pageable,paciente, enabled);
 	}
 	
 	public List<Evento> findTop30ByPacienteOrderByDataregistroDesc(Paciente paciente) {

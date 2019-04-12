@@ -20,10 +20,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import br.com.cuidebemapp.service.util.Base64Deserializer;
-
 /**
  *
  * @author alecindro
@@ -43,7 +39,6 @@ public class PacientePhoto implements Serializable {
     @Column(name = "idpacientephoto")
     private Long idpacientephoto;
     @Column(name = "photo")
-    @JsonDeserialize(using = Base64Deserializer.class)
     private String photo;
     @Column(name = "descricao")
     private String descricao;
@@ -53,8 +48,9 @@ public class PacientePhoto implements Serializable {
     private String type;
     @Column(name = "dataregistro")
     private java.time.OffsetDateTime dataregistro;
-    @Column(name = "login")
-    private String login;
+    @JoinColumn(name = "login", referencedColumnName = "login")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Usuario usuario;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "idpaciente", referencedColumnName = "idpaciente")
     private Paciente paciente;
@@ -114,12 +110,14 @@ public class PacientePhoto implements Serializable {
         this.dataregistro = dataregistro;
     }
 
-    public String getLogin() {
-		return login;
+
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Paciente getPaciente() {

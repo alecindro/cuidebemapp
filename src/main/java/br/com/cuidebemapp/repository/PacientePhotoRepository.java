@@ -2,6 +2,8 @@ package br.com.cuidebemapp.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.cuidebemapp.model.Paciente;
 import br.com.cuidebemapp.model.PacientePhoto;
+import br.com.cuidebemapp.model.Usuario;
 
 @Repository
 public interface PacientePhotoRepository extends JpaRepository<PacientePhoto, Long> {
@@ -22,7 +25,7 @@ public interface PacientePhotoRepository extends JpaRepository<PacientePhoto, Lo
 	public List<PacientePhoto> findAll();
 	
 //	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_USER}, cacheResolver="dynCacheResolver")
-	public PacientePhoto findByLogin(String login);
+	public PacientePhoto findByUsuario(Usuario usuario);
 	
 //	@Cacheable(cacheNames = {PACIENTE_PHOTO_BY_PACIENTE}, cacheResolver="dynCacheResolver")
 	public List<PacientePhoto> findByPacienteAndPrincipal(Paciente paciente, boolean principal);
@@ -34,4 +37,10 @@ public interface PacientePhotoRepository extends JpaRepository<PacientePhoto, Lo
 	@EntityGraph(attributePaths = { "paciente" })
 	List<PacientePhoto> findByPacienteAndPrincipalAndDataregistroBetween(Paciente paciente, boolean principal, java.time.OffsetDateTime init,
 			java.time.OffsetDateTime end);
+	
+	@EntityGraph(attributePaths = { "usuario" })
+	List<PacientePhoto> findTop30ByPacienteOrderByDataregistroDesc(Paciente paciente);
+	
+	@EntityGraph(attributePaths = { "usuario" })
+	Page<PacientePhoto> findByPaciente(Pageable pageable, Paciente paciente);
 }

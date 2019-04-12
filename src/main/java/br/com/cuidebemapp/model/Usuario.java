@@ -64,7 +64,9 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = "usuario", allowSetters = true)
 	private Set<UsuarioTelefone> usuarioTelefones;
-
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = "usuario", allowSetters = true)
+	private Set<PacientePhoto> pacientePhoto;
 	public Usuario() {
 	}
 
@@ -173,6 +175,16 @@ public class Usuario implements Serializable {
 
 	public void setUsuarioTelefones(Set<UsuarioTelefone> usuarioTelefones) {
 		this.usuarioTelefones = usuarioTelefones;
+	}
+	
+	
+	@XmlTransient
+	public Set<PacientePhoto> getPacientePhoto() {
+		return pacientePhoto;
+	}
+
+	public void setPacientePhoto(Set<PacientePhoto> pacientePhoto) {
+		this.pacientePhoto = pacientePhoto;
 	}
 
 	@Override

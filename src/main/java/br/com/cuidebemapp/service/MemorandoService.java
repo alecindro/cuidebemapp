@@ -3,6 +3,8 @@ package br.com.cuidebemapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.cuidebemapp.model.Memorando;
@@ -35,6 +37,14 @@ public class MemorandoService {
 	public List<Memorando> getMemorandosToday(Paciente paciente) {
 		return getMemorandos(paciente, DateUtil.dataAntes24Hs(),
 				DateUtil.dataAgora());
+	}
+	
+	public List<Memorando> getMemorandosTop30(Paciente paciente) {
+		return memorandoRepository.findTop30ByPacienteOrderByDataregistroDesc(paciente);
+	}
+	
+	public Page<Memorando> getMemorandos(Pageable pageable, Paciente paciente) {
+		return memorandoRepository.findByPaciente(pageable,paciente);
 	}
 
 	public List<Memorando> getMemorandos(Paciente paciente, java.time.OffsetDateTime init, java.time.OffsetDateTime end) {

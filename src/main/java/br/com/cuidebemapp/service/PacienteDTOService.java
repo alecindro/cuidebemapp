@@ -15,6 +15,7 @@ import br.com.cuidebemapp.model.Evento;
 import br.com.cuidebemapp.model.Paciente;
 import br.com.cuidebemapp.model.PacientePhoto;
 import br.com.cuidebemapp.model.PatologiaPaciente;
+import br.com.cuidebemapp.model.Usuario;
 import br.com.cuidebemapp.repository.AgendaRepository;
 import br.com.cuidebemapp.repository.PacientePhotoRepository;
 import br.com.cuidebemapp.repository.PatologiaPacienteRepository;
@@ -80,7 +81,7 @@ public class PacienteDTOService {
 	}
 
 	private Agenda nextAgenda(Long idpaciente) {
-		return agendaRepository.findNexAgenda(idpaciente);
+		return agendaRepository.findNextAgenda(idpaciente);
 	}
 
 	private boolean isCheckin(Long idpaciente) {
@@ -113,7 +114,8 @@ public class PacienteDTOService {
 			pacientePhoto.setPhoto(pacienteDTO.getPhoto());
 			pacientePhoto.setDataregistro(OffsetDateTime.now());
 			pacientePhoto.setPrincipal(true);
-			pacientePhoto.setLogin(login);
+			Usuario usuario = new Usuario(login);
+			pacientePhoto.setUsuario(usuario);
 			pacientePhoto.setPaciente(pacienteDTO.getPaciente());
 			pacientePhoto = pacientePhotoRepository.save(pacientePhoto);
 
@@ -128,7 +130,8 @@ public class PacienteDTOService {
 			}
 			pp.setPaciente(pacienteDTO.getPaciente());
 			pp.setPhoto(pacienteDTO.getPhoto());
-			pp.setLogin(login);
+			Usuario usuario = new Usuario(login);
+			pp.setUsuario(usuario);
 			pp.setPrincipal(true);
 			pacientePhotoRepository.save(pp);
 		}

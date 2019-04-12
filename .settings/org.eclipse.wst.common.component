@@ -5,6 +5,10 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <dependent-module archiveName="testrest2-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/testrest2/testrest2">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="cuidebemapp"/>
         <property name="java-output-path" value="/cuidebemapp/target/classes"/>
     </wb-module>

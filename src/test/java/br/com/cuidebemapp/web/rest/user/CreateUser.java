@@ -2,6 +2,8 @@ package br.com.cuidebemapp.web.rest.user;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,19 +24,20 @@ import br.com.cuidebemapp.web.rest.RestBase;
 @ActiveProfiles("test")
 public class CreateUser extends RestBase {
 
-	private String baseURL = "/api/users";
+	private String baseURL = "/sec/users";
 
 
 	@Test
 	public void teste() throws Exception {
 		UserDTO usuarioDTO = new UserDTO();
-		usuarioDTO.setLogin("userteste");
-		usuarioDTO.setFirstName("userTeste");
-		usuarioDTO.setLastName("sobrenome");
-		usuarioDTO.setEmail("alecindrocastilho@gmail.com");
+		usuarioDTO.setLogin("userteste3");
+		usuarioDTO.setFirstName("userTeste3");
+		usuarioDTO.setLastName("sobrenome3");
+		usuarioDTO.setEmail("alecindrocastilho3@gmail.com");
+		usuarioDTO.setAuthorities(new HashSet<>());
 		usuarioDTO.getAuthorities().add(AuthoritiesConstants.USER);
 		createUser(usuarioDTO);
-		create(usuarioDTO);
+		//create(usuarioDTO);
 	}
 	
 	public void createUser(UserDTO usuarioDTO) throws Exception {
