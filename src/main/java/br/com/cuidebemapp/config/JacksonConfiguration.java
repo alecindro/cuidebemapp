@@ -7,6 +7,7 @@ import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module.Feature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
@@ -35,7 +36,9 @@ public class JacksonConfiguration {
      */
     @Bean
     public Hibernate5Module hibernate5Module() {
-        return new Hibernate5Module();
+    	Hibernate5Module h5 = new Hibernate5Module();
+    	h5.disable(Feature.USE_TRANSIENT_ANNOTATION);
+        return h5;
     }
 
     /*

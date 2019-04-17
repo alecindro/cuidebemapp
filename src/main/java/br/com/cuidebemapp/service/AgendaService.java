@@ -3,11 +3,17 @@ package br.com.cuidebemapp.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cuidebemapp.model.Agenda;
 import br.com.cuidebemapp.model.Agendadef;
+import br.com.cuidebemapp.model.Paciente;
 import br.com.cuidebemapp.repository.AgendaRepository;
 import br.com.cuidebemapp.service.util.DateUtil;
 
@@ -16,6 +22,7 @@ import br.com.cuidebemapp.service.util.DateUtil;
 public class AgendaService {
 
 	private final AgendaRepository repository;
+	private static final Integer offset = 5;
 	
 	public AgendaService(AgendaRepository repository) {
 		this.repository = repository;
@@ -42,6 +49,7 @@ public class AgendaService {
 	}
 	
 	public void setEvento(Agenda agenda, Long idevento) {
+		agenda = repository.findById(agenda.getIdagenda()).get();
 		agenda.setIdevento(idevento);
 		repository.save(agenda);
 	}
@@ -52,6 +60,14 @@ public class AgendaService {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Page<Agenda> getAgendaByPaciente(Long idpaciente,Integer page){
+		Sort sort = new Sort(Direction.DESC, "data");
+		Pageable pageable = PageRequest.of(page, offset, sort);
+		java.time.OffsetDateTime data = java.time.OffsetDateTime.now();
+		data = data.plusHours(8L);
+		return repository.findByPacienteAndDataBeforeAndIdeventoIsNullOrderByDataAsc(pageable, new Paciente(idpaciente), data);
 	}
 	
 	private void saveDiasPersonalizado(Agendadef agendadef){
@@ -79,6 +95,10 @@ public class AgendaService {
 	}
 	
 	private void save(List<Agenda> agendas) {
+		java.time.OffsetDateTime dataregistro = java.time.OffsetDateTime.now();
+		for(Agenda agenda : agendas) {
+			agenda.setDataregistro(dataregistro);
+		}
 		repository.saveAll(agendas);
 	}
 	

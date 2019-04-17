@@ -6,6 +6,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cuidebemapp.enums.Check;
 import br.com.cuidebemapp.model.Agenda;
@@ -16,6 +17,7 @@ import br.com.cuidebemapp.security.SecurityUtils;
 import br.com.cuidebemapp.util.DateUtil;
 
 @Service
+@Transactional
 public class EventoService {
 	
 	private final CacheManager cacheManager;
@@ -33,7 +35,8 @@ public class EventoService {
 	public Evento save(Evento evento) {
 		Agenda agenda = evento.getAgenda();
 		evento.setUsuario(SecurityUtils.getCurrentUsuario());
-		Paciente paciente = evento.getPaciente();
+		evento.setDataregistro(java.time.OffsetDateTime.now());
+		//Paciente paciente = evento.getPaciente();
 		evento =  eventoRepository.save(evento);
 		if(agenda != null) {
 			agendaService.setEvento(agenda, evento.getIdevento());

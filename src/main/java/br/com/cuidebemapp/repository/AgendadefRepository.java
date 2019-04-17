@@ -19,7 +19,7 @@ public interface AgendadefRepository extends JpaRepository<Agendadef,Long> {
 	Agendadef findNextAgenda(Long idpaciente);
 	
 	@EntityGraph(attributePaths = {"paciente"})
-	List<Agendadef> findByPaciente(Paciente paciente);
+	List<Agendadef> findByPacienteOrderByDatafimDesc(Paciente paciente);
 	
 	@EntityGraph(attributePaths = {"paciente"})
 	Optional<Agendadef> findById(Long id);

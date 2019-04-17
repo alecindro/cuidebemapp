@@ -33,7 +33,7 @@ private final AgendaService agendaService;
 	}
 	
 	public List<Agendadef> getAgendaDefByPaciente(Long idpaciente){
-		return repository.findByPaciente(new Paciente(idpaciente));
+		return repository.findByPacienteOrderByDatafimDesc(new Paciente(idpaciente));
 	}
 	
 	public Optional<Agendadef> findAgenda(Long idagendadef){
