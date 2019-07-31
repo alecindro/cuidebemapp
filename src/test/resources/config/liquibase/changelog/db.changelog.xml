@@ -762,5 +762,4 @@
 			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
 			referencedColumnNames="login" referencedTableName="usuario" />
 	</changeSet>
-	
 </databaseChangeLog>

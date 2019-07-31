@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.domain;
+package br.com.cuidebemapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.envers.Audited;
@@ -31,7 +31,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
     private String createdBy;
 
     @CreatedDate
-    @Column(name = "created_date", updatable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     @JsonIgnore
     private Instant createdDate = Instant.now();
 

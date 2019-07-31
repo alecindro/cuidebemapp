@@ -1,15 +1,27 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+  <property name="autoIncrement" value="false"/>
+  <changeSet author="alecindro (generated)" id="1540827102718-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+  <changeSet author="alecindro (generated)" id="1540827102718-2">
+        <createSequence sequenceName="sq_user" startValue="5" incrementBy="1"/>
+    </changeSet> 
+  <changeSet author="alecindro (generated)" id="1540827102718-3">
+        <createSequence sequenceName="sq_residencia"/>
+    </changeSet> 
+     
+    
   <changeSet author="alecindro (generated)" id="1540827102718-6">
-        <createTable tableName="jhi_authority">
+        <createTable tableName="authority">
             <column name="name" type="VARCHAR(50)">
                 <constraints primaryKey="true"/>
             </column>
         </createTable>
     </changeSet>
       <changeSet author="alecindro (generated)" id="1540827102718-9">
-        <createTable tableName="jhi_user">
-            <column autoIncrement="true" name="id" type="BIGINT">
+        <createTable tableName="user">
+            <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="login" type="VARCHAR(50)">
@@ -40,7 +52,7 @@
         </createTable>
     </changeSet>
      <changeSet author="alecindro (generated)" id="1540827102718-10">
-        <createTable tableName="jhi_user_authority">
+        <createTable tableName="user_authority">
             <column name="user_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
@@ -51,7 +63,7 @@
     </changeSet>
     <changeSet author="alecindro (generated)" id="1540827102718-16">
         <createTable tableName="residencia">
-            <column autoIncrement="true" name="idresidencia" type="INT">
+            <column autoIncrement="${autoIncrement}" name="idresidencia" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="razao" type="VARCHAR(254)">
@@ -61,86 +73,104 @@
             <column name="endereco" type="VARCHAR(254)"/>
             <column name="cep" type="VARCHAR(8)"/>
             <column name="cnpj" type="VARCHAR(14)"/>
+            <column name="telefones" type="VARCHAR(254)"/>
         </createTable>
     </changeSet>
-    <changeSet author="alecindro (generated)" id="1540827102718-17">
-        <createTable tableName="residencia_telefone">
-            <column name="idresidencia" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="idtelefone" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column autoIncrement="true" name="idresidencia_telefone" type="INT">
-                <constraints primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="alecindro (generated)" id="1540827102718-30">
-        <createTable tableName="usuario_residencia">
-            <column autoIncrement="true" name="idusuario_residencia" type="INT">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="idusuario" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="idresidencia" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-      <changeSet author="alecindro (generated)" id="1540827102718-36">
-        <addUniqueConstraint columnNames="idusuario, idresidencia" constraintName="unique_usuario_res" tableName="usuario_residencia"/>
-    </changeSet>
-       <changeSet author="alecindro (generated)" id="1540827102718-38">
-        <addUniqueConstraint columnNames="idresidencia, idtelefone" constraintName="uniqueresid_tel" tableName="residencia_telefone"/>
-    </changeSet>
-      <changeSet author="alecindro (generated)" id="1540827102718-44">
-        <createIndex indexName="fk_emailenv_resid_idx" tableName="emailenviado">
-            <column name="idresidencia"/>
-        </createIndex>
-    </changeSet>
-       <changeSet author="alecindro (generated)" id="1540827102718-49">
-        <createIndex indexName="idresidencia_idx" tableName="residencia_telefone">
-            <column name="idresidencia"/>
-        </createIndex>
-    </changeSet>
-        <changeSet author="alecindro (generated)" id="1540827102718-50">
-        <createIndex indexName="idtelefone_idx" tableName="residencia_telefone">
-            <column name="idtelefone"/>
-        </createIndex>
-    </changeSet>
-    <changeSet author="alecindro (generated)" id="1540827102718-57">
-        <createIndex indexName="res_usuario_fk_idx" tableName="usuario_residencia">
-            <column name="idresidencia"/>
-        </createIndex>
-    </changeSet>
-      <changeSet author="alecindro (generated)" id="1540827102718-63">
-        <createIndex indexName="usuario_res_fk_idx" tableName="usuario_residencia">
-            <column name="idusuario"/>
-        </createIndex>
-    </changeSet>
-     <changeSet author="alecindro (generated)" id="1540827102718-88">
-        <addForeignKeyConstraint baseColumnNames="idresidencia" baseTableName="usuario_residencia" constraintName="res_usuario_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="idresidencia" referencedTableName="residencia" />
-    </changeSet>
-        <changeSet author="alecindro (generated)" id="1540827102718-89">
-        <addForeignKeyConstraint baseColumnNames="idresidencia" baseTableName="residencia_telefone" constraintName="residencia_tel_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="idresidencia" referencedTableName="residencia" />
-    </changeSet>
-       <changeSet author="alecindro (generated)" id="1540827102718-94">
-        <addForeignKeyConstraint baseColumnNames="idtelefone" baseTableName="residencia_telefone" constraintName="telefone_residencia_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="idtelefone" referencedTableName="telefone" />
-    </changeSet>
-      <changeSet author="alecindro (generated)" id="1540827102718-95">
-        <addForeignKeyConstraint baseColumnNames="idusuario" baseTableName="usuario_residencia" constraintName="usuario_res_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="idusuario" referencedTableName="usuario" />
-    </changeSet>
+  
 <changeSet author="alecindro (generated)" id="1540827102718-43">
-        <createIndex indexName="fk_authority_name" tableName="jhi_user_authority">
+        <createIndex indexName="fk_authority_name" tableName="user_authority">
             <column name="authority_name"/>
         </createIndex>
     </changeSet> 
     <changeSet author="alecindro (generated)" id="1540827102718-69">
-        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="fk_authority_name" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="name" referencedTableName="jhi_authority" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="user_authority" constraintName="fk_authority_name" 
+        deferrable="false" 
+        initiallyDeferred="false" 
+        onDelete="NO ACTION" 
+        onUpdate="NO ACTION" referencedColumnNames="name" referencedTableName="authority"/>        
     </changeSet>
         <changeSet author="alecindro (generated)" id="1540827102718-83">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="fk_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_authority" constraintName="fk_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
     </changeSet>
+    
+     <changeSet id="1540827102718-84" author="alecindro">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users.csv"
+                  separator=";"
+                  tableName="user">
+        </loadData>
+        </changeSet>
+        
+           <changeSet id="1540827102718-85" author="alecindro">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/authorities.csv"
+                  separator=";"
+                  tableName="authority">
+        </loadData>
+        </changeSet>
+        
+              <changeSet id="1540827102718-86" author="alecindro">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_authorities.csv"
+                  separator=";"
+                  tableName="user_authority">
+        </loadData>
+        </changeSet>
+        <changeSet author="alecindro (generated)"
+		id="1540827102718-87">
+				<createSequence sequenceName="jhi_persistent_audit_event_evento_sequence" startValue="1" incrementBy="1"/>
+		<createTable tableName="jhi_persistent_audit_event">
+			<column defaultValueSequenceNext="jhi_persistent_audit_event_evento_sequence" name="event_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="principal" type="VARCHAR(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="event_date" type="timestamp" />
+			<column name="event_type" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-88">
+		<createTable tableName="jhi_persistent_audit_evt_data">
+			<column name="event_id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR(150)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="value" type="VARCHAR(255)" />
+		</createTable>
+	</changeSet>
+        <changeSet author="alecindro (generated)"
+		id="1540827102718-89">
+		<createIndex indexName="idx_persistent_audit_event"
+			tableName="jhi_persistent_audit_event">
+			<column name="principal" />
+			<column name="event_date" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-90">
+		<createIndex indexName="idx_persistent_audit_evt_data"
+			tableName="jhi_persistent_audit_evt_data">
+			<column name="event_id" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet author="alecindro (generated)"
+		id="1540827102718-91">
+		<addForeignKeyConstraint
+			baseColumnNames="event_id"
+			baseTableName="jhi_persistent_audit_evt_data"
+			constraintName="fk_evt_pers_audit_evt_data" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="event_id"
+			referencedTableName="jhi_persistent_audit_event" />
+	</changeSet>
+	<changeSet id="1540827102718-92" author="alecindro">
+	     <createSequence sequenceName="jhi_persistent_audit_event_sequence" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="jhi_date_time_wrapper_sequence" startValue="1" incrementBy="1"/>
+   
+	</changeSet>
     </databaseChangeLog>

@@ -3,24 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.cuidebemapp.model;
+package br.com.cuidebemapp.uaa.model;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,8 +28,8 @@ public class Residencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name = "residencia_sequence", sequenceName = "residencia_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "residencia_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_residencia")
+    @SequenceGenerator(name = "sq_residencia", sequenceName="sq_residencia", allocationSize=1)
     @Basic(optional = false)
     @Column(name = "idresidencia")
     private Long idresidencia;
@@ -49,8 +44,8 @@ public class Residencia implements Serializable {
     private String cep;
     @Column(name = "cnpj")
     private String cnpj;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "residencia", fetch = FetchType.LAZY)
-    private Set<ResidenciaTelefone> residenciaTelefoneSet;
+    @Column(name = "telefones")
+    private String telefones;
 
     public Residencia() {
     }
@@ -113,16 +108,16 @@ public class Residencia implements Serializable {
     }
 
 
-    @XmlTransient
-    public Set<ResidenciaTelefone> getResidenciaTelefoneSet() {
-        return residenciaTelefoneSet;
-    }
 
-    public void setResidenciaTelefoneSet(Set<ResidenciaTelefone> residenciaTelefoneSet) {
-        this.residenciaTelefoneSet = residenciaTelefoneSet;
-    }
+    public String getTelefones() {
+		return telefones;
+	}
 
-    @Override
+	public void setTelefones(String telefones) {
+		this.telefones = telefones;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idresidencia != null ? idresidencia.hashCode() : 0);

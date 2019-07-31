@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.domain;
+package br.com.cuidebemapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

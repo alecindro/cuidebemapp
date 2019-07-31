@@ -46,4 +46,10 @@ public class UsuarioService {
 	public Usuario findByLogin(String login) {
 		return usuarioRepository.findById(login).get();
 	}
+	
+	public Usuario createUsuario(Usuario usuario, boolean enabled) {
+		usuario.setEnabled(enabled);
+		return usuarioRepository.save(usuario);
+	}
+	
 }

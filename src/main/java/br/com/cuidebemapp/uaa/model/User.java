@@ -1,4 +1,5 @@
-package br.com.cuidebemapp.domain;
+package br.com.cuidebemapp.uaa.model;
+
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -7,6 +8,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
+//import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
@@ -28,20 +31,24 @@ import org.hibernate.annotations.BatchSize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.cuidebemapp.config.Constants;
+import br.com.cuidebemapp.model.AbstractAuditingEntity;
 
 /**
  * A user.
  */
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "user")
+@XmlRootElement
 //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "jhi_user_sequence", sequenceName = "jhi_user_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jhi_user_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user")
+    @SequenceGenerator(name = "sq_user", sequenceName="sq_user", allocationSize=1)
+    @Basic(optional = false)
+    @Column(name="id")
     private Long id;
 
     @NotNull
@@ -64,9 +71,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Email
+    //@Email
     @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
+    @Column(length = 254)
     private String email;
 
     @NotNull
@@ -93,14 +100,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "reset_date")
     private Instant resetDate = null;
+    
 
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "jhi_user_authority",
+        name = "user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  //  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
@@ -200,8 +208,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setLangKey(String langKey) {
         this.langKey = langKey;
     }
-
-    public Set<Authority> getAuthorities() {
+    
+	public Set<Authority> getAuthorities() {
+    	if(authorities == null) {
+    		authorities = new HashSet<>();
+    	}
         return authorities;
     }
 

@@ -1,11 +1,13 @@
 package br.com.cuidebemapp.web.rest;
 
-import br.com.cuidebemapp.CuidebemappApp;
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.repository.UserRepository;
-import br.com.cuidebemapp.security.jwt.TokenProvider;
-import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
-import br.com.cuidebemapp.web.rest.vm.LoginVM;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.Matchers.not;
+import br.com.cuidebemapp.CuidebemappApp;
+import br.com.cuidebemapp.security.jwt.TokenProvider;
+import br.com.cuidebemapp.uaa.model.User;
+import br.com.cuidebemapp.uaa.repository.UserRepository;
+import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
+import br.com.cuidebemapp.web.rest.vm.LoginVM;
 
 /**
  * Test class for the UserJWTController REST controller.

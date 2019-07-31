@@ -45,8 +45,8 @@ public class PacienteUpdate extends RestBase {
 		for (PacienteDTO pacienteDTO : pacientes) {
 			Paciente p = pacienteDTO.getPaciente();
 			p.setApelido(p.getNome()+1);
-			Paciente result = put(baseURL,p);
-			assertEquals(p.getNome(),result.getNome());
+			PacienteDTO result = put(baseURL,pacienteDTO);
+			assertEquals(p.getNome(),result.getPaciente().getNome());
 		}
 	}
 }

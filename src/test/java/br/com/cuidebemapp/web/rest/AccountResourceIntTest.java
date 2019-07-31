@@ -1,21 +1,22 @@
 package br.com.cuidebemapp.web.rest;
 
-import br.com.cuidebemapp.CuidebemappApp;
-import br.com.cuidebemapp.config.Constants;
-import br.com.cuidebemapp.domain.Authority;
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.repository.AuthorityRepository;
-import br.com.cuidebemapp.repository.UserRepository;
-import br.com.cuidebemapp.security.AuthoritiesConstants;
-import br.com.cuidebemapp.service.MailService;
-import br.com.cuidebemapp.service.UserService;
-import br.com.cuidebemapp.service.dto.PasswordChangeDTO;
-import br.com.cuidebemapp.service.dto.UserDTO;
-import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
-import br.com.cuidebemapp.web.rest.vm.KeyAndPasswordVM;
-import br.com.cuidebemapp.web.rest.vm.ManagedUserVM;
-import org.apache.commons.lang3.RandomStringUtils;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,15 +33,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.cuidebemapp.CuidebemappApp;
+import br.com.cuidebemapp.config.Constants;
+import br.com.cuidebemapp.security.AuthoritiesConstants;
+import br.com.cuidebemapp.service.MailService;
+import br.com.cuidebemapp.service.dto.PasswordChangeDTO;
+import br.com.cuidebemapp.service.dto.UserDTO;
+import br.com.cuidebemapp.uaa.model.Authority;
+import br.com.cuidebemapp.uaa.model.User;
+import br.com.cuidebemapp.uaa.repository.AuthorityRepository;
+import br.com.cuidebemapp.uaa.repository.UserRepository;
+import br.com.cuidebemapp.uaa.service.UserService;
+import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
+import br.com.cuidebemapp.web.rest.vm.KeyAndPasswordVM;
+import br.com.cuidebemapp.web.rest.vm.ManagedUserVM;
 
 /**
  * Test class for the AccountResource REST controller.

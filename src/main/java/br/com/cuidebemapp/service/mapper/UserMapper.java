@@ -1,13 +1,15 @@
 package br.com.cuidebemapp.service.mapper;
 
-import br.com.cuidebemapp.domain.Authority;
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.service.dto.UserDTO;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import br.com.cuidebemapp.service.dto.UserDTO;
+import br.com.cuidebemapp.uaa.model.Authority;
+import br.com.cuidebemapp.uaa.model.User;
 
 /**
  * Mapper for the entity User and its DTO called UserDTO.

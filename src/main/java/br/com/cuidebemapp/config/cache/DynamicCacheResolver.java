@@ -8,8 +8,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.CacheOperationInvocationContext;
 import org.springframework.cache.interceptor.CacheResolver;
 
-import br.com.cuidebemapp.config.db.CurrentTenantIdentifierResolverImpl;
-import br.com.cuidebemapp.config.db.TenantContext;
+import br.com.cuidebemapp.config.db.tenant.CurrentTenantIdentifierResolverImpl;
+import br.com.cuidebemapp.config.db.tenant.TenantContext;
 
 public class DynamicCacheResolver implements CacheResolver{
 	

@@ -1,16 +1,24 @@
 package br.com.cuidebemapp.web.rest;
 
-import br.com.cuidebemapp.CuidebemappApp;
-import br.com.cuidebemapp.domain.Authority;
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.repository.UserRepository;
-import br.com.cuidebemapp.security.AuthoritiesConstants;
-import br.com.cuidebemapp.service.MailService;
-import br.com.cuidebemapp.service.UserService;
-import br.com.cuidebemapp.service.dto.UserDTO;
-import br.com.cuidebemapp.service.mapper.UserMapper;
-import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
-import br.com.cuidebemapp.web.rest.vm.ManagedUserVM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,15 +34,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.cuidebemapp.CuidebemappApp;
+import br.com.cuidebemapp.security.AuthoritiesConstants;
+import br.com.cuidebemapp.service.MailService;
+import br.com.cuidebemapp.service.dto.UserDTO;
+import br.com.cuidebemapp.service.mapper.UserMapper;
+import br.com.cuidebemapp.uaa.model.Authority;
+import br.com.cuidebemapp.uaa.model.User;
+import br.com.cuidebemapp.uaa.repository.UserRepository;
+import br.com.cuidebemapp.uaa.service.UserService;
+import br.com.cuidebemapp.web.rest.errors.ExceptionTranslator;
+import br.com.cuidebemapp.web.rest.vm.ManagedUserVM;
 
 /**
  * Test class for the UserResource REST controller.

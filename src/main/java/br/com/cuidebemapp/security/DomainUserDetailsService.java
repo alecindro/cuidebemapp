@@ -1,7 +1,9 @@
 package br.com.cuidebemapp.security;
 
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.repository.UserRepository;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import br.com.cuidebemapp.uaa.model.User;
+import br.com.cuidebemapp.uaa.repository.UserRepository;
 
 /**
  * Authenticate a user from the database.

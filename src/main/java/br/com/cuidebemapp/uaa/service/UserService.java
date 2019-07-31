@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.service;
+package br.com.cuidebemapp.uaa.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -20,14 +20,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cuidebemapp.config.Constants;
-import br.com.cuidebemapp.domain.Authority;
-import br.com.cuidebemapp.domain.User;
-import br.com.cuidebemapp.repository.AuthorityRepository;
-import br.com.cuidebemapp.repository.UserRepository;
 import br.com.cuidebemapp.security.AuthoritiesConstants;
 import br.com.cuidebemapp.security.SecurityUtils;
+import br.com.cuidebemapp.service.dto.AdminDTO;
 import br.com.cuidebemapp.service.dto.UserDTO;
 import br.com.cuidebemapp.service.util.RandomUtil;
+import br.com.cuidebemapp.uaa.model.Authority;
+import br.com.cuidebemapp.uaa.model.User;
+import br.com.cuidebemapp.uaa.repository.AuthorityRepository;
+import br.com.cuidebemapp.uaa.repository.UserRepository;
 import br.com.cuidebemapp.web.rest.errors.EmailAlreadyUsedException;
 import br.com.cuidebemapp.web.rest.errors.InvalidPasswordException;
 import br.com.cuidebemapp.web.rest.errors.LoginAlreadyUsedException;
@@ -36,7 +37,7 @@ import br.com.cuidebemapp.web.rest.errors.LoginAlreadyUsedException;
  * Service class for managing users.
  */
 @Service
-@Transactional
+@Transactional(transactionManager = "transactionManagerUAA")
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -168,6 +169,41 @@ public class UserService {
         log.debug("Created Information for User: {}", user);
         return user;
     }
+   
+    public User createAdminUser(AdminDTO adminDTO, String schema) {
+
+		String login = adminDTO.getEmail().toLowerCase();
+		if (userRepository.findOneByLogin(login).isPresent()) {
+			throw new LoginAlreadyUsedException();
+		} else if (userRepository.findOneByEmailIgnoreCase(adminDTO.getEmail()).isPresent()) {
+			throw new EmailAlreadyUsedException();
+		}
+
+		User user = new User();
+		user.setLogin(adminDTO.getEmail());
+		user.setFirstName(adminDTO.getFirstName());
+		user.setLastName(adminDTO.getLastName());
+		user.setEmail(adminDTO.getEmail());
+			user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+			Set<String> _authorities = new HashSet<String>();
+			_authorities.add(schema);
+			_authorities.add(AuthoritiesConstants.ADMIN);
+			Set<Authority> authorities = new HashSet<>(authorityRepository.findAllById(_authorities));
+			user.setAuthorities(authorities);
+		
+		String encryptedPassword = passwordEncoder.encode(adminDTO.getPassword());
+		user.setPassword(encryptedPassword);
+		//user.setResetKey(RandomUtil.generateResetKey());
+		user.setResetDate(Instant.now());
+		user.setActivated(true);
+		userRepository.save(user);
+		//cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLogin());
+		//cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).evict(user.getEmail());
+		log.debug("Created Information for User: {}", user);
+
+		return user;
+	}
+
 
     /**
      * Update basic information (first name, last name, email, language) for the current user.

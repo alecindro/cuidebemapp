@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.config.db;
+package br.com.cuidebemapp.config.db.tenant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.config.db;
+package br.com.cuidebemapp.config.db.tenant;
 
 import java.util.Locale;
 

@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.cuidebemapp.config.ApplicationProperties;
-import br.com.cuidebemapp.config.db.CurrentTenantIdentifierResolverImpl;
 import br.com.cuidebemapp.config.db.cache.BeanClassLoaderAwareJCacheRegionFactory;
+import br.com.cuidebemapp.config.db.tenant.CurrentTenantIdentifierResolverImpl;
 import br.com.cuidebemapp.security.SecurityUtils;
 import io.github.jhipster.config.JHipsterProperties;
 

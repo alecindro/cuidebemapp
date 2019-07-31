@@ -1,4 +1,4 @@
-package br.com.cuidebemapp.config.db;
+package br.com.cuidebemapp.config.db.tenant;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -110,6 +110,7 @@ public final class SecurityUtils {
 
 	        } finally {
 				try {
+					if(conn != null)
 					conn.close();
 				} catch (SQLException e) {
 					

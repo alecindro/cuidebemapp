@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.util.Assert;
 
-import br.com.cuidebemapp.config.db.TenantContext;
+import br.com.cuidebemapp.config.db.tenant.TenantContext;
 
 public final class MultitenantCache implements Cache {
 

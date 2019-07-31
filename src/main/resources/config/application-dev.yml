@@ -19,7 +19,35 @@ logging:
         io.github.jhipster: DEBUG
         br.com.cuidebemapp: DEBUG
 
+uaa:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:postgresql://192.168.1.107:5432/cuidebemapp?currentSchema=uaa
+        username: postgres
+        password: banana2018!
+        hikari:
+            auto-commit: false
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+        database: POSTGRESQL
+        show-sql: true
+        properties:
+            hibernate.id.new_generator_mappings: true
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.dialect: org.hibernate.dialect.PostgreSQL94Dialect
+            hibernate.jdbc.time_zone: UTC-2
+            hibernate.default_schema: uaa     
+            
 spring:
+    application:
+        name: cuidebemapp
     profiles:
         active: dev
         include:
@@ -36,9 +64,9 @@ spring:
             indent-output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/cuidebem2
-        username: alecindro
-        password: alecindro
+        jdbc-url: jdbc:postgresql://192.168.1.107:5432/cuidebemapp
+        username: postgres
+        password: banana2018!
         hikari:
             auto-commit: false
     jpa:
